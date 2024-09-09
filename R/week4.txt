@@ -1,0 +1,158 @@
+Week 4
+
+Str
+Diagnostic function => What’s in this object?
+
+EX1
+> x <- rnorm(100,2,4)
+> summary(x)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ -7.403  -1.173   1.612   1.555   4.302   9.091 
+> str(x)
+ num [1:100] 2.766 0.205 2.745 1.199 0.769 ...
+
+EX2
+> f <- gl(40,10)
+> str(f)
+ Factor w/ 40 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
+
+EX3
+> m <- matrix(rnorm(100),10,10)
+> str(m)
+ num [1:10, 1:10] 0.981 1.077 0.637 1.38 -0.405 ...
+
+EX4
+> m[,1]
+ [1]  0.9807998  1.0772564  0.6367687  1.3799194 -0.4047107 -1.5279713  0.1947928 -0.2092455 -0.4464797
+[10]  0.9676459
+
+EX5
+> s <- split(airquality,airquality$Month)
+> str(s)
+List of 5
+ $ 5:'data.frame':	31 obs. of  6 variables:
+  ..$ Ozone  : int [1:31] 41 36 12 18 NA 28 23 19 8 NA ...
+  ..$ Solar.R: int [1:31] 190 118 149 313 NA NA 299 99 19 194 ...
+  ..$ Wind   : num [1:31] 7.4 8 12.6 11.5 14.3 14.9 8.6 13.8 20.1 8.6 ...
+  ..$ Temp   : int [1:31] 67 72 74 62 56 66 65 59 61 69 ...
+  ..$ Month  : int [1:31] 5 5 5 5 5 5 5 5 5 5 ...
+  ..$ Day    : int [1:31] 1 2 3 4 5 6 7 8 9 10 ...
+ $ 6:'data.frame':	30 obs. of  6 variables:
+  ..$ Ozone  : int [1:30] NA NA NA NA NA NA 29 NA 71 39 ...
+  ..$ Solar.R: int [1:30] 286 287 242 186 220 264 127 273 291 323 ...
+  ..$ Wind   : num [1:30] 8.6 9.7 16.1 9.2 8.6 14.3 9.7 6.9 13.8 11.5 ...
+  ..$ Temp   : int [1:30] 78 74 67 84 85 79 82 87 90 87 ...
+  ..$ Month  : int [1:30] 6 6 6 6 6 6 6 6 6 6 ...
+  ..$ Day    : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ 7:'data.frame':	31 obs. of  6 variables:
+  ..$ Ozone  : int [1:31] 135 49 32 NA 64 40 77 97 97 85 ...
+  ..$ Solar.R: int [1:31] 269 248 236 101 175 314 276 267 272 175 ...
+  ..$ Wind   : num [1:31] 4.1 9.2 9.2 10.9 4.6 10.9 5.1 6.3 5.7 7.4 ...
+  ..$ Temp   : int [1:31] 84 85 81 84 83 83 88 92 92 89 ...
+  ..$ Month  : int [1:31] 7 7 7 7 7 7 7 7 7 7 ...
+  ..$ Day    : int [1:31] 1 2 3 4 5 6 7 8 9 10 ...
+ $ 8:'data.frame':	31 obs. of  6 variables:
+  ..$ Ozone  : int [1:31] 39 9 16 78 35 66 122 89 110 NA ...
+  ..$ Solar.R: int [1:31] 83 24 77 NA NA NA 255 229 207 222 ...
+  ..$ Wind   : num [1:31] 6.9 13.8 7.4 6.9 7.4 4.6 4 10.3 8 8.6 ...
+  ..$ Temp   : int [1:31] 81 81 82 86 85 87 89 90 90 92 ...
+  ..$ Month  : int [1:31] 8 8 8 8 8 8 8 8 8 8 ...
+  ..$ Day    : int [1:31] 1 2 3 4 5 6 7 8 9 10 ...
+ $ 9:'data.frame':	30 obs. of  6 variables:
+  ..$ Ozone  : int [1:30] 96 78 73 91 47 32 20 23 21 24 ...
+  ..$ Solar.R: int [1:30] 167 197 183 189 95 92 252 220 230 259 ...
+  ..$ Wind   : num [1:30] 6.9 5.1 2.8 4.6 7.4 15.5 10.9 10.3 10.9 9.7 ...
+  ..$ Temp   : int [1:30] 91 92 93 93 87 84 80 78 75 73 ...
+  ..$ Month  : int [1:30] 9 9 9 9 9 9 9 9 9 9 ...
+  ..$ Day    : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+
+
+
+Generating random numbers:
+rnorm: generate random normal variates with a given mean and standard deviation
+dnorm: evaluate the normal distribution (with a given mean/SD) at a point
+pnorm: evaluate the cumulative distribution function
+rpois: generate random Poisson variates with a given rate
+
+probability distribution function
+d-density
+r-random number generation
+p-cumulative distribution
+q-quantile function
+
+
+
+pnorm(q)=phi(q), qnorm(p)=phi-1(q)
+
+EX6
+> rnorm(10)
+ [1]  1.24471303  0.08275998 -1.25902252 -0.43894110 -0.86989301  0.68412050 -0.76556532  0.40703519
+ [9] -0.99383663 -0.28639384
+> rnorm(10,20,2)
+ [1] 21.89903 16.50786 19.27968 22.69570 19.35033 17.72179 20.75251 19.66790 16.08778 19.19695
+
+set.seed #pseudo-variable that ensure reproductivity
+
+> set.seed(1)
+> rnorm(5)
+[1] -0.6264538  0.1836433 -0.8356286  1.5952808  0.3295078
+> rnorm(5)
+[1] -0.8204684  0.4874291  0.7383247  0.5757814 -0.3053884
+
+> rpois(10,1)
+ [1] 3 0 1 0 0 1 0 1 2 0
+> rpois(10,2)
+ [1] 2 2 2 1 3 2 3 0 3 2
+# 2 is mean/rate
+
+> ppois(2,2)
+[1] 0.6766764
+# pr(x<=2) the poison random variable prob is less than 2
+
+sampling
+
+> set.seed(1)
+> sample(1:10,4)
+[1] 3 4 5 7
+> sample(letter,4)
+Error in sample(letter, 4) : object 'letter' not found
+> sample(letters,4)
+[1] "f" "w" "y" "p"
+> sample(1:10)
+ [1]  7  1  2  8  5 10  4  6  3  9
+# without replacement
+> sample(1:10,replace=TRUE)
+ [1]  4  8 10  3  7  2  3  4  1  4
+
+
+
+Profiling
+Profiling is a systematic way to examine how much time is spent in different parts of a program.
+
+Shouldn’t think about speed first; first is to make things work.
+
+
+System.time()
+Output: proc_time
+Time: user time (CPU); elapsed time (you)
+U>E: 
+E<U: many programs going on, like library (linear algebra things, parallel processing)
+CPU may work on other things.
+
+
+Optimization:
+1.Design first, then optimize
+2.dont premature optimization
+3.measure (collect data), don’t guess
+
+
+Rprof()
+A performance analysis…
+Don’t use it together with system.time()
+
+summaryRprof()
+
+by.total()
+by.self()
+
+

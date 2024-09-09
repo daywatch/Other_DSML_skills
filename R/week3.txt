@@ -1,0 +1,477 @@
+Week 3
+
+Loop functions
+Lapply (list), sapply (same as lapply but simplification), apply (the margins of an array), tapply (subsets of a vector), mapply (multivariate version of lapply) 
+Also “split” with apply
+
+Coercion for a list: as.list
+
+Lapply
+EX1:
+> x <- list(a =1:5, b=rnorm(10))
+> x
+$a
+[1] 1 2 3 4 5
+
+$b
+ [1]  0.1914453 -0.4488061  0.1862152 -0.2003549 -0.3078116  1.5331059 -0.7914014 -0.9110498
+ [9] -0.0952676  0.3689981
+
+> lapply(x,mean)
+$a
+[1] 3
+
+$b
+[1] -0.0474927
+
+##lapply always returns a list
+
+EX2:
+> x <- 1:4
+> lapply(x,runif)
+[[1]]
+[1] 0.7108169
+
+[[2]]
+[1] 0.710346 0.474639
+
+[[3]]
+[1] 0.9688282 0.5138259 0.9005831
+
+[[4]]
+[1] 0.59789127 0.96521355 0.25745983 0.08854886
+
+
+EX3:
+> lapply(x,runif,min=0,max=10)
+[[1]]
+[1] 4.660697
+
+[[2]]
+[1] 7.213901 9.116503
+
+[[3]]
+[1] 6.721314 3.879188 1.148587
+
+[[4]]
+[1] 9.3675197 9.2973088 0.5466497 7.3775242
+
+EX4: heavy use of anonymous functions
+Extract the first column from each matrix
+> x <- list(a=matrix(1:4,2,2),b=matrix(1:6,3,2))
+> x
+$a
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+$b
+     [,1] [,2]
+[1,]    1    4
+[2,]    2    5
+[3,]    3    6
+
+> lapply(x,function(elt),elt[,1])
+Error: unexpected ',' in "lapply(x,function(elt),"
+##elt is a made-up function to grab the first column
+
+Sapply
+If the result is a list where every element is 1, then a vec is returned; if the result is a list where every element’s length is the same, then a matrix is returned; if it cannot figure out, then a list is returned. 
+
+EX5:
+## a vector is returned; “mean()” doesn’t work on lists
+> x <- list(a=1:4,b=rnorm(10),c=rnorm(20,1),d=rnorm(100,5))
+> sapply(x,mean)
+        a         b         c         d 
+2.5000000 0.2139836 0.4600913 4.9709709 
+> class(sapply(x,mean))
+[1] "numeric"
+
+
+Apply
+
+Mostly used for columns and rows in a matrix; also for general arrays
+EX6:
+
+> x <- matrix(rnorm(200),20,10)
+> x
+             [,1]        [,2]        [,3]        [,4]       [,5]        [,6]       [,7]
+ [1,]  0.35951037  0.25196418 -0.17189207  0.39254540 -1.9561112 -1.36058115 -1.0288320
+ [2,] -0.98075218 -1.07601158  0.17839278  2.31872624 -0.4015239  0.20404224 -0.8182733
+ [3,] -0.91930767  0.05954972  1.22515255  1.24471303  0.6563286  1.25362772  1.4188046
+ [4,]  0.80686857  0.34306592  0.83736072  0.08275998 -0.6778991 -1.53340569  2.2437526
+ [5,] -2.37885523 -0.26774524 -1.70163585 -1.25902252  1.7584740  0.22411619 -2.0785401
+ [6,] -0.95061209 -0.06698484  0.26485157 -0.43894110 -0.8209528  0.07969751  1.3934347
+ [7,] -0.59978598  0.89503900 -0.28093242 -0.86989301  1.1630841  1.35834766 -1.2328586
+ [8,] -1.91420702 -0.67364665 -1.38275551  0.68412050 -0.7778514  0.10918052  1.3346220
+ [9,]  0.58709203  1.77067529 -0.27974070 -0.76556532 -0.8614837 -0.87158915 -0.9099239
+[10,] -0.50210794  0.74876992  0.11021063  0.40703519 -4.5113672  0.06803428  0.1711611
+[11,]  0.07218913 -1.88696297 -0.27561201 -0.99383663  0.7294645  1.28210972  1.4891085
+[12,] -0.75863652  0.08834482 -0.28115086 -0.28639384  1.5175892  0.64770424  0.5045798
+[13,]  0.28954811 -0.31595563 -0.08324425  0.94951529  1.1929203 -0.28793496 -0.5583864
+[14,] -0.74579036 -0.46286784  0.33322827 -1.74607101  2.3849894 -0.82194899 -0.3278867
+[15,]  0.85695074  1.72885690  0.56414760 -0.36016238  0.7312586  0.22149247 -0.3316311
+[16,] -0.78497923 -0.53002890 -1.07761475  1.34784853 -0.6561582 -0.63798105  0.8738627
+[17,]  0.50409955  0.73818695 -1.14908291 -0.32483707  0.5884006 -0.35101104  1.1078743
+[18,]  0.11285040  0.95875381 -1.18702832 -1.13910745 -1.5171796  1.01265767  0.7878613
+[19,]  0.65848129  0.08203908 -0.17922002  0.37625671  0.4641344 -1.19214767 -0.7421125
+[20,]  0.56206915  1.58626026 -1.80109537 -0.16604770  1.5475881  0.09546738  0.4635327
+             [,8]       [,9]        [,10]
+ [1,] -1.41648770  1.8037471 -1.607561656
+ [2,]  0.23104672 -0.1939720  1.023998505
+ [3,] -0.08097544 -0.7575889 -1.038093020
+ [4,] -0.01616072 -0.1407965  1.178141340
+ [5,]  0.85021345  0.7986418 -0.887563620
+ [6,]  0.23348628 -0.5822791 -0.695607360
+ [7,] -1.52170575  0.2140460  1.367529974
+ [8,] -2.29978857 -0.3960134  0.195209004
+ [9,]  0.14091012  0.7216804 -0.837428842
+[10,]  0.01692126 -0.6669633 -0.945317305
+[11,]  1.25094221 -0.1337118 -0.599548970
+[12,] -1.46844513  0.4345356 -1.264690273
+[13,]  2.16848950  0.5232391 -1.560332762
+[14,] -1.04156125  0.3381398  1.455471971
+[15,]  0.17378418  0.8586924  1.125778544
+[16,]  0.39543150  1.1826307  0.465232943
+[17,] -1.23894322  1.9576741  1.097068369
+[18,]  1.70454469  1.4756485  0.001868425
+[19,]  0.80254336  0.5343091 -1.294552519
+[20,]  2.15603281 -0.5028936 -1.122605776
+> apply(x,2,mean)
+ [1] -0.28626874  0.19856511 -0.31688305 -0.02731786  0.02768524 -0.02500611  0.18800750
+ [8]  0.05201392  0.37343831 -0.19715015
+##margin 2: preserve all the columns and collapse the rows
+> apply(x,1,sum)
+ [1] -4.7336987  0.4856736  3.0622113  3.1236871 -4.9419170 -1.5839072  0.4928710 -5.1211304 -1.3053737 -5.1036233
+[11]  0.9341416 -0.8665630  2.3178583 -0.6342967  5.5691680  0.5782443  2.9294297  2.2108695 -0.4902686  2.8183079
+##margin 1: preserve all the rows and collapse the columns
+rowSums=apply(x,1,sum)
+rowMeans=apply(x,1,mean)
+colSums=apply(x,2,sum)
+colMeans=apply(x,2,mean)
+
+
+EX7: quintiles of the rows of a matrix
+> x <- matrix(rnorm(200),20,10)
+> apply(x,1,quantile,probs=c(0.25,0.75))
+          [,1]       [,2]        [,3]        [,4]       [,5]       [,6]       [,7]       [,8]        [,9]      [,10]
+25% -0.5809978 -0.8237116 -0.62387762 -0.68944995 -0.5281022 -0.8184700 -0.3546380 -0.2197593 -0.55889314 -1.0146341
+75%  0.5865756  0.3815251  0.08641744  0.09694716  0.2109390  0.5549174  0.3347432  1.0386384 -0.05015169  0.5391982
+         [,11]      [,12]      [,13]        [,14]      [,15]        [,16]      [,17]      [,18]       [,19]     [,20]
+25% -0.2654860 -0.6949905 -0.4205925 -0.009323959 -0.5887117 -0.968603750 -0.5613768 -1.0133901 -1.25971679 -0.917481
+75%  0.8761715  0.9399615  0.0426014  0.399888547  0.7000215 -0.009519585  0.9533017  0.1325692  0.00429806  1.342292
+
+EX8: average matrix in an array
+> a <- array(rnorm(2*2*10),c(2,2,10))
+##create 10 2*2 tables
+> apply(a,c(1,2),mean)
+          [,1]       [,2]
+[1,] 0.1473825 -0.2412296
+[2,] 0.4247021 -0.2485657
+> rowMeans(a,dims=2)
+          [,1]       [,2]
+[1,] 0.1473825 -0.2412296
+[2,] 0.4247021 -0.2485657
+
+
+Mapply
+It applies a function in parallel over a set of arguments
+> str(mapply)
+function (FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)  
+
+EX9:
+
+> list(rep(1,4),rep(2,3),rep(3,2),rep(4,1))
+[[1]]
+[1] 1 1 1 1
+
+[[2]]
+[1] 2 2 2
+
+[[3]]
+[1] 3 3
+
+[[4]]
+[1] 4
+
+
+> mapply(rep,1:4,4:1)
+
+## mapply can be used for a function with multiple sets of arguments
+
+
+EX10:
+> noise <- function(n,mean,sd){rnorm(n,mean,sd)}
+> noise(5,1,2)
+[1] 0.6355566 1.3298849 2.6023788 0.9256519 1.0427784
+> mapply(noise,1:5,1:5,2)
+[[1]]
+[1] 0.9867589
+
+[[2]]
+[1] 0.415703 2.000774
+
+[[3]]
+[1] 2.750824 2.713772 1.758774
+
+[[4]]
+[1]  3.5332840 -0.9508946  5.1865331  4.2680458
+
+[[5]]
+[1] 5.771591 7.534970 6.228687 2.867848 5.118644
+#the means are changing from 1 to 5
+same as: list(noise(1,1,2), noise(2,2,2), noise(3,3,2), noise(4,4,2), noise(5,5,2))
+
+
+tapply
+
+x is a vector
+function (X, INDEX, FUN = NULL, ..., simplify = TRUE)  
+INDEX is the factor or a list of factors
+##rnormnormal distribution; runifuniform distribution
+
+EX11:
+
+> x <- c(rnorm(10),runif(10),rnorm(10,1))
+> x
+ [1] -2.86889417 -0.06222120 -0.85106372 -0.81430432 -2.05366956  2.13619192 -0.21640150  1.19974619 -0.28735386
+[10] -0.30382612  0.06590995  0.09442014  0.53732786  0.29042903  0.01125028  0.34981756  0.58895443  0.55885508
+[19]  0.75771879  0.84076666  2.08892668  3.36892356  0.23495122  1.57551305 -0.93872975  0.18285421  1.21974307
+[28]  2.06467601  0.69170377  1.04990738
+> f <- gl(3,10)
+## create three levels, each level is repeated by ten times; indicates which group the observation is in
+> f
+ [1] 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3
+Levels: 1 2 3
+> tapply(x,f,mean)
+         1          2          3 
+-0.4121796  0.4095450  1.1538469
+
+> tapply(x,f,range)
+$`1`
+[1] -2.868894  2.136192
+
+$`2`
+[1] 0.01125028 0.84076666
+
+$`3`
+[1] -0.9387297  3.3689236
+
+## give the range of the variable!
+
+
+Split
+function (x, f, drop = FALSE, ...)  
+##drop means deleting the NA
+
+EX12:
+> x <- c(rnorm(10),runif(10),rnorm(10,1))
+> f <- gl(3,10)
+> split(x,f)
+$`1`
+ [1] -2.49429582 -1.08944394 -0.40181143  1.22880296  0.73739853 -0.63781689 -0.05339353 -1.06600999 -0.14100772
+[10]  2.46366537
+
+$`2`
+ [1] 0.1960316 0.1453929 0.2620070 0.7554493 0.8122757 0.3486889 0.3190405 0.7627307 0.6894133 0.6418983
+
+$`3`
+ [1]  1.2519556  0.1924871  2.7428239  0.7144316  0.8317418  1.3042264  0.8355857 -0.6364617  0.7400829  1.7588725
+
+
+splitting a data frame
+
+EX13:
+> library(datasets)
+> head(airquality)
+  Ozone Solar.R Wind Temp Month Day
+1    41     190  7.4   67     5   1
+2    36     118  8.0   72     5   2
+3    12     149 12.6   74     5   3
+4    18     313 11.5   62     5   4
+5    NA      NA 14.3   56     5   5
+6    28      NA 14.9   66     5   6
+> lapply(s,function(x) colMeans(x[,c('Ozone','Solar.R','Wind')]))
+$`5`
+   Ozone  Solar.R     Wind 
+      NA       NA 11.62258 
+
+$`6`
+    Ozone   Solar.R      Wind 
+       NA 190.16667  10.26667 
+
+$`7`
+     Ozone    Solar.R       Wind 
+        NA 216.483871   8.941935 
+
+$`8`
+   Ozone  Solar.R     Wind 
+      NA       NA 8.793548 
+
+$`9`
+   Ozone  Solar.R     Wind 
+      NA 167.4333  10.1800 
+
+## no empty value
+> lapply(s,function(x) colMeans(x[,c('Ozone','Solar.R','Wind')],na.rm=TRUE))
+$`5`
+    Ozone   Solar.R      Wind 
+ 23.61538 181.29630  11.62258 
+
+$`6`
+    Ozone   Solar.R      Wind 
+ 29.44444 190.16667  10.26667 
+
+$`7`
+     Ozone    Solar.R       Wind 
+ 59.115385 216.483871   8.941935 
+
+$`8`
+     Ozone    Solar.R       Wind 
+ 59.961538 171.857143   8.793548 
+
+$`9`
+    Ozone   Solar.R      Wind 
+ 31.44828 167.43333  10.18000
+
+
+EX 14:
+Splitting on more than one level (e.g., gender and race)
+> x <- rnorm(10)
+> f1 <- gl(2,5)
+> f2 <- gl(5,2)
+> f1
+ [1] 1 1 1 1 1 2 2 2 2 2
+Levels: 1 2
+> f2
+ [1] 1 1 2 2 3 3 4 4 5
+> interaction(f1,f2)
+ [1] 1.1 1.1 1.2 1.2 1.3 2.3 2.4 2.4 2.5 2.5
+Levels: 1.1 2.1 1.2 2.2 1.3 2.3 1.4 2.4 1.5 2.5
+
+> str(split(x,list(f1,f2)))
+List of 10
+ $ 1.1: num [1:2] 0.0186 0.9999
+ $ 2.1: num(0) 
+ $ 1.2: num [1:2] 0.00912 0.54895
+ $ 2.2: num(0) 
+ $ 1.3: num 0.474
+ $ 2.3: num 0.911
+ $ 1.4: num(0) 
+ $ 2.4: num [1:2] -1.55 1.19
+ $ 1.5: num(0) 
+ $ 2.5: num [1:2] 0.379 1.198
+
+## drop the empty
+> str(split(x,list(f1,f2),drop=TRUE))
+List of 6
+ $ 1.1: num [1:2] 0.0186 0.9999
+ $ 1.2: num [1:2] 0.00912 0.54895
+ $ 1.3: num 0.474
+ $ 2.3: num 0.911
+ $ 2.4: num [1:2] -1.55 1.19
+ $ 2.5: num [1:2] 0.379 1.198
+
+
+Debugging tools
+
+Indicators: message (still in execution), warning (unexpected things happen, at the end of program), error (in the middle)  conditions (generic --- you can create it)
+
+Warning
+EX15
+> log(-1)
+[1] NaN
+Warning message:
+In log(-1) : NaNs produced
+
+
+Error
+EX16
+printmessage <- function(x){
+        if (x>0)
+                print ('x is greater than zero')
+        else
+                print ('x is less than zero')
+        invisible(x)
+        ## prevent the auto-printing
+}
+
+> printmessage(1)
+[1] "x is greater than zero"
+> printmessage(NA)
+Error in if (x > 0) print("x is greater than zero") else print("x is less than zero") : 
+  missing value where TRUE/FALSE needed
+
+Another solution:
+printmessage <- function(x){
+        if (is.na(x))
+                print ('x is a missing value')
+        else if (x>0)
+                print ('x is greater than zero')
+        else
+                print ('x is less than zero')
+        invisible(x)
+        ## prevent the auto-printing
+}
+
+> printmessage('x')
+[1] "x is greater than zero"
+## sometimes it’s not an error, but still wrong
+
+
+
+
+
+Tools:
+Traceback
+	Print out the function call stack after an error occurs
+Debug
+	Flag a function for debug mode
+Browser
+	Suspend the execution of a function whenever it is called and puts the function in debug mode
+Trace
+	Allows you to insert debugging code into a function a specific places
+Recover
+	Allows you to modify the error behavior so that you can browse the function that called stack
+
+
+EX17
+> mean(r)
+Error in mean(r) : object 'r' not found
+> traceback()
+1: mean(r)
+
+
+EX18
+> lm(y-x)
+Error in formula.default(object, env = baseenv()) : invalid formula
+> traceback()
+9: stop("invalid formula")
+8: formula.default(object, env = baseenv())
+7: formula(object, env = baseenv())
+6: as.formula(formula)
+5: model.frame.default(formula = y - x, drop.unused.levels = TRUE)
+4: stats::model.frame(formula = y - x, drop.unused.levels = TRUE)
+3: eval(expr, envir, enclos)
+2: eval(mf, parent.frame())
+1: lm(y - x)
+
+
+
+Quiz:
+#1
+> library(datasets)
+> data(iris)
+> ?iris
+> tapply(iris$Sepal.Length, iris$Species, mean)["virginica"]
+
+#2
+> apply(iris[,1:4],2,mean)
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+    5.843333     3.057333     3.758000     1.199333
+
+#3
+with(mtcars, tapply(mpg, cyl, mean))
+sapply(split(mtcars$mpg, mtcars$cyl), mean)
+
+

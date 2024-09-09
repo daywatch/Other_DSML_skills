@@ -1,0 +1,458 @@
+R programming 
+Week 1
+Notes
+
+ls()
+getwd()
+dir()
+source("mysample.R")
+myfunction
+second(4:10)
+
+R is a dialect for S.
+Features: (1) similar to S (2)semantics are similar to S (3)different platforms
+(4)frequent releases
+Free: any purpose; study how program works; redistribution; improve
+Drawbacks: (1) old (2)3d (3) based on consumer demand and user contributions
+(4)obj in physical memories (5)not for all situations
+
+two parts: R “base system” + else
+bioconductor website
+
+Ask questions: (1)what step it takes to reproduce the problem
+(2)expected output (3)what do you see in stead (4) what versions of things
+(5)OS (6)additional info
+ good subject header
+Do: (1)describe the goal (2)be explicit (3)minimum amount of info (4)
+Courteous (5)follow up with some solution
+
+
+> x <- 1
+> print (x)
+[1] 1
+> msg <- 'hello'
+> msg
+[1] "hello"
+> x <- 1:20
+> x
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+
+
+basic atomic classes:
+character, numeric, integer, complex, logical
+the most basic obj is a vector
+empty vector: vector()
+list can contain different classes
+
+NaN: no value
+Inf: infinity
+Dimnames: dimension names
+Attributes: name, dimension, class, length, user-defined things
+
+C(): vectors
+> x <- c(0.5,0.6)
+> x <- c(T,F)
+> x <- c('a','b','c')
+> x <- 3:39
+> x <- c(1+0i,1+4i)
+> x <- vector('numeric',length=10)
+> x
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+type coercion:
+> y <- c(‘a’,T): character
+> y <- c(TRUE, 2): numeric
+> y <- c(1.7,’a’): character
+
+explicit coercion:
+> x <- 0.6
+> x
+[1] 0.6
+> class(x)
+[1] "numeric"
+> as.numeric(x)
+[1] 0.6
+> as.logical(x)
+[1] TRUE
+> as.character(x)
+[1] "0.6"
+
+impossible to convert: character -> numeric; character -> logical
+
+
+> x <- list(1,"a",TRUE,1+4i)
+> x
+[[1]]
+[1] 1
+
+[[2]]
+[1] "a"
+
+[[3]]
+[1] TRUE
+
+[[4]]
+[1] 1+4i
+
+matrices:
+> m <- matrix(nrow = 2, ncol =3)
+> m
+     [,1] [,2] [,3]
+[1,]   NA   NA   NA
+[2,]   NA   NA   NA
+> dim(m)
+[1] 2 3
+> attributes(m)
+$dim
+[1] 2 3
+
+Creating a matrix
+(1)
+> m <- matrix(1:6,nrow = 2, ncol =3)
+> m
+     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
+
+(2)
+> m <- 1:10
+> m
+ [1]  1  2  3  4  5  6  7  8  9 10
+> dim(m) <- c(2,5)
+> m
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10
+
+(3)
+> x <- 1:3
+> y <- 10:12
+> cbind(x,y)
+     x  y
+[1,] 1 10
+[2,] 2 11
+[3,] 3 12
+> rbind(x,y)
+  [,1] [,2] [,3]
+x    1    2    3
+y   10   11   12
+Factor: categorical data
+Ordered/unordered
+lm() or glm() : linear models
+
+(1)unordered
+> x <- factor(c('yes','no','no','yes','no'))
+> x
+[1] yes no  no  yes no 
+Levels: no yes
+> table(x)
+x
+ no yes 
+  3   2 
+> unclass(x)
+[1] 2 1 1 2 1
+attr(,"levels")
+[1] "no"  "yes"
+> attr(x,'levels')
+[1] "no"  "yes"
+
+(2)ordered
+> x <- factor(c('yes','no','no','yes','no'),levels=c('yes','no'))
+> x
+[1] yes no  no  yes no 
+Levels: yes no
+Yes is the baseline level.
+
+Missing value:
+NA:not available
+NaN: not a number
+NaN/NA
+is.na()
+is.nan()
+nan is an na, but na is not nan
+
+
+> x <- c(1,2,NA,10.3)
+> is.na(x)
+[1] FALSE FALSE  TRUE FALSE
+> x <- c(1,2,NaN,NA,4)
+> is.na(x)
+[1] FALSE FALSE  TRUE  TRUE FALSE
+> is.nan(x)
+[1] FALSE FALSE  TRUE FALSE FALSE
+
+
+Data Frame
+Tabular data! Special type of list, each element has the same length
+a.  row.names 
+b.  read.table() or read.csv()
+c. data.matrix()
+
+
+> x <- data.frame(foo = 1:4, bar = c(T,F,T,F))
+> x
+  foo   bar
+1   1  TRUE
+2   2 FALSE
+3   3  TRUE
+4   4 FALSE
+> nrow(x)
+[1] 4
+> ncol(x)
+[1] 2
+
+
+Names
+Good for writing readable names.
+(1) numeric
+> x <-1:3
+> names(x)
+NULL
+> names(x) <- c('a','b','c')
+> names(x)
+[1] "a" "b" "c"
+
+(2)list
+> x <- list(a=1,b=2,c=3)
+> x
+$a
+[1] 1
+
+$b
+[1] 2
+
+$c
+[1] 3
+
+
+or:
+
+> m <- matrix(1:4,nrow=2,ncol=2)
+> m
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+> dimnames(m) <- list(c("a","b"),c("c","d"))
+> m
+  c d
+a 1 3
+b 2 4
+
+
+Reading and writing data
+
+1.read tabular
+read.table, read.csv
+
+readLines: read lines of a text file
+source: for reading in R code files (inverse of dump)
+dget: for reading in R code files (inverse of dput)
+load: for loading in saved workspaces
+unserialize: for reading single R objects in binary form
+
+
+data <- read.table(‘foo.txt’)
+
+large tables:
+key in the help page of read.table carefully
+set comment.char = “”
+
+Using colClasses/set nrows:
+Initial <- read.table(‘data.txt’,nrows = 100)
+Classes <- sapply(initial, class)
+tabAll <- read.table(‘data.txt’, colClasses =classes)
+
+
+physical RAM is important/other apps/other users/OS /32 or 64
+calculation: 
+
+
+2. Textual data formats
+dump/dput
+longer-lived, version control thing, 
+
+> dput(y)
+structure(list(a = 1, b = structure(1L, .Label = "a", class = "factor")), .Names = c("a", 
+"b"), row.names = c(NA, -1L), class = "data.frame")
+> dput(y,file="y.R")
+> new.y <- dget('y.R')
+> new.y
+  a b
+1 1 a
+
+dump multiple R obj, different from dget
+
+> x <- 'foo'
+> y <- data.frame(a=1,b="a")
+> y
+  a b
+1 1 a
+> dump(c("x","y"),file="data.R")
+> rm(x,y)
+> source('data.R')
+> x
+[1] "foo"
+> y
+  a b
+1 1 a
+>
+
+Connection to the outside world
+file
+gzfile/bzfile
+url
+
+con <- gzfile(‘words.gz’)
+x <- readLines(con,10)
+x
+
+> con <- url('http://www.jhsph.edu','r')
+> x <- readLines(con)
+> head(x)
+[1] "<!DOCTYPE html>"                                               
+[2] "<html lang=\"en\">"                                            
+[3] ""                                                              
+[4] "<head>"                                                        
+[5] "<meta charset=\"utf-8\" />"                                    
+[6] "<title>Johns Hopkins Bloomberg School of Public Health</title>"
+
+
+Subetting objects
+[: return the same class; more than one element
+[[: extract single data frame or list
+$: 
+
+
+(1) string indexing
+> x <- c("a","b","c",'c','d')
+> x[1]
+[1] "a"
+> x[x>"a"]
+[1] "b" "c" "c" "d"
+> u <- x>'a'
+> u
+[1] FALSE  TRUE  TRUE  TRUE  TRUE
+> x[u]
+[1] "b" "c" "c" "d"
+
+
+(2) list indexing
+> x <- list(a=1,b=2)
+> x[['b']]
+[1] 2
+> x$b
+[1] 2
+> x['b']
+$b
+[1] 2
+
+
+
+> x[c(1,2)]
+$a
+[1] 1
+
+$b
+[1] 2
+
+nested list:
+
+> x <- list(a=list(10,12,14),b=c(3.14,2.81))
+> x[[c(1,3)]]
+[1] 14
+> x[[1]][[3]]
+[1] 14
+
+
+(3) matrix indexing
+> x <- matrix(1:6,2,3)
+> x
+     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
+> x[1,2]
+[1] 3
+> x[2,1]
+[1] 2
+> x[1,]
+[1] 1 3 5
+> x[2,]
+[1] 2 4 6
+> x[1,,drop=FALSE]##I don’t want to see the rest except for xrow=1
+     [,1] [,2] [,3]
+[1,]    1    3    5
+
+
+Partial matching skill:
+> x <- list("helloworld" = 1:5)
+> x
+$helloworld
+[1] 1 2 3 4 5
+
+> x$h
+[1] 1 2 3 4 5
+> x[['h']]
+NULL
+> x[['h',exact=FALSE]]
+[1] 1 2 3 4 5
+
+removing NA values:
+> x <- c(1,2,NA,4,NA,5)
+> bad <- is.na(x)
+> x[!bad]
+[1] 1 2 4 5
+
+> x <- c(1,2,NA,4,NA,5)
+> y <- c('a','b',NA,'d',NA,'f')
+> good <- complete.cases(x,y)
+> good
+[1]  TRUE  TRUE FALSE  TRUE FALSE  TRUE
+> x[good]
+[1] 1 2 4 5
+> y[good]
+[1] "a" "b" "d" "f"
+
+air[1:6]
+good <- complete.cases(air)
+air[good, ][1:6, ] 
+#填补空缺的val
+
+Vetorization:
+
+> x <- matrix(1:4, 2,2); y <- matrix(rep(10),2,2)
+> x*y ## element-wise multiplication
+     [,1] [,2]
+[1,]   10   30
+[2,]   20   40
+> x %*% y ##true matrix multiplication
+     [,1] [,2]
+[1,]   40   40
+[2,]   60   60
+
+
+Quiz 1
+> data <- read.csv("hw1_data.csv")
+> sum(is.na(data$Ozone))
+[1] 37
+
+
+#17
+> x <- c(data$Ozone)
+> bad <- is.na(x)
+> mean(x[!bad])
+[1] 42.12931
+
+#18
+> Ozone31temp90<-subset(data, Ozone>31 & Temp>90)
+> mean(Ozone31temp90$Solar.R)
+
+#19
+> new <- subset(data, Month ==6)
+> mean(data$Temp)
+
+
+#20
+colMax <- function(data) sapply(data, max, na.rm = TRUE) 
+colMax(dat)
+
+

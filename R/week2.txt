@@ -1,0 +1,158 @@
+Week 2
+Control structures
+
+
+repeat infinite loop-->only way is to break it; better to use for loop
+next:skip a loop
+
+function template:
+
+f <- function(<arguments>){
+##do something
+}
+
+Formal arguments are arguments included in the function definition.
+The formals function returns a list of all the formal arguments of a function.
+Function arguments can be missing or might have default values.
+
+Order:
+> sd(na.rm=FALSE,x=mydata)
+> sd(x=mydata,na.rm=FALSE)
+> sd(x=mydata)
+
+Args:
+> args(columnmean)
+function (y)
+
+arg matching: exact, partial, positional
+lazy evaluation
+f <- function(a,b=1){
+  a^2
+}
+f(2)
+4
+The value of 2 s positionally matched a
+
+“…” argument
+1.passing around the same thing
+myplot <- function(x,y,type="1",...){
+   plot(x,y,type=type,...)#the arguments are preserved
+}
+
+2.generic function
+> mean
+function (x, ...) 
+UseMethod("mean")
+<bytecode: 0x102a58e78>
+<environment: namespace:base>
+
+
+> args(paste)
+function (..., sep = " ", collapse = NULL) 
+NULL
+##things after … should be clarified explicitly and fully
+
+
+
+lm confusion: global is always the first and base the last
+> search()
+ [1] ".GlobalEnv"        "tools:rstudio"     "package:stats"     "package:graphics" 
+ [5] "package:grDevices" "package:utils"     "package:datasets"  "package:methods"  
+ [9] "Autoloads"         "package:base"
+
+When the user is using package with library the namespace of the package gets put in position 2
+
+Scoping rule for R:
+Free variable: not in header
+Lexical scoping: the values of free variables are searched in the environment in which the function was defined. Environment means: (1)symbol-value pairs like x-3.14, (2) every environment has a parent environment (except for empty ones), and (3) function+environment =function closure
+
+The search for free variable: function’s environment  parent environment  top-level environment (usually global)  continue (the next thing on the search list) until we search at the empty environment
+
+define a function inside a function
+
+
+make.power <- function(n){
+  pow <- function(x){
+    x^n
+  }
+  pow
+}
+> cube <- make.power(3)
+> cube(3)
+[1] 27
+> cube
+function(x){
+    x^n
+  }
+<environment: 0x102154a68>
+> square <- make.power(2)
+> square(2)
+[1] 4
+
+> ls(environment(cube))
+[1] "n"   "pow"
+
+> get("n",environment(cube))
+[1] 3
+
+
+Lexical scoping vs. dynamic scoping:
+
+Example:
+y <- 10
+f <- function(x){
+  y <- 2
+  y^2 +g(x)
+}
+g <- function(x){
+  x*y
+}
+
+lexical scoping y=10 (looking up)
+dynamic scoping y=2 (where the function is called)
+
+when the function is defined and called from the global environment, then the defining and calling environments are the same. 
+
+Lexical scoping: scheme, perl, python, and common lisp
+
+
+Coding standard for R
+always use text editor/text file
+Indent your code
+Limit the width of your code (80 column)
+Limit the length of your function
+
+Days –day; time-second
+Dates can be coerced from a character string using as.Date() function
+Time:POSIXct (integers)/lt(list for years, week, month)
+Weekdays
+Months
+Quarter(Q1-4)
+
+> x <- Sys.time()
+> x
+[1] "2015-10-15 21:58:44 MDT"
+> p <- as.POSIXlt(x)
+> names(unclass(p))
+ [1] "sec"    "min"    "hour"   "mday"   "mon"    "year"   "wday"   "yday"  
+ [9] "isdst"  "zone"   "gmtoff"
+> p$sec
+[1] 44.51723
+
+
+> x <- Sys.time()
+> unclass(x)
+[1] 1444968041
+> x$sec
+Error in x$sec : $ operator is invalid for atomic vectors
+
+Character strings can be coerced into either Strptime function (change format) or as.Date, as.POSIXlt or as.POSIXcl.
+
+In R, what is the parent frame?
+It is the environment in which a function was called
+
+
+
+
+files <- list.files("diet_data") 
+
