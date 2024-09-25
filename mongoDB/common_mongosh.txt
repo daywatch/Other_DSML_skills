@@ -1,0 +1,142 @@
+Mongo DB notes
+
+Two popular data stacks
+MERN, Mongo, Express, React, Node JS
+MEAN: Mongo, Express, Angular, Node JS
+
+MongoDB is based on Mozila’s SpiderMonkey JS engine
+
+Two kinds of databases
+
+SQL - tables and their relations
+NoSQL - documents
+
+Basic structure
+Database > collections > documents
+
+
+Two applications: Shell and server
+Mongo Shell (management) > mongosh
+
+
+Mongo db basic commands
+
+cls
+show dbs
+use DBNAME
+
+- create a new db just use
+use school
+
+- both create collection and drop are after use
+db.createCollection("student")
+db.dropDatabase()
+db.student.drop()
+
+- put mongosh cmd in a bash
+mongo <dbname> --eval "db.dropDatabase()"
+
+- insert document; "student" is a collection
+- name-value pairs
+- date types: string, int, double/float, boolean, date, null, list, nested documents ({...}})
+use school
+db.student.insertOne({name: "Spongebob",
+		      age:30, 
+                      gpa:3.9, 
+                      fulltime:true,
+                      registerDate: new Date(),
+                      graduationDate: null,
+		      classes:[1,2,3,4]},
+address:{street:1, city:tempe, zip:85284}})
+
+
+- print a collection
+db.student.find()
+
+- insert many
+db.student.insertMany([{name: "Spongebob",age:30, gpa:3.9},{name: "Spongebob",sex:"Male", gpa:3.9},{name: "Spongebob",age:30, gpa:3.9}])
+
+- sort document; 1 means alphabetical/ascending, -1 means reverse-alphabetical/descending 
+db.student.find().sort({name:1})
+db.student.find().sort({gpa:-1})
+
+- limit
+db.student.find().limit(2)
+
+- search: find(({query},{output})); $options "i" means case-free
+- in mongo compass use filter and project
+db.student.find({
+  gpa: 4.0,
+  name: { $regex: /^A/, $options: 'i' }
+})
+
+db.student.find({},{name:true})
+
+- update one document: .update(filter,update); unset means not removing a field
+db.student.update({name:"Spongebob"},{$set: {fulltime:true}})
+db.student.update({_id:1238783fdf3e4},{$set: {fulltime:true}})
+db.student.update({_id:1238783fdf3e4},{$unset: {fulltime:true}})
+
+- update many or only one
+db.student.updateMany({},{$set: {fulltime:false}})
+db.student.updateOne({name:"Gary"},{$unset: {fulltime:false}})
+- add EXIST like SQL
+db.student.updateMany({fullTime:{$exists:false}},{$set: {fulltime:true}})
+
+- delete documents
+db.student.deleteOne({name:"Larry"})
+db.student.deleteMany({fullTime:false})
+db.student.deleteMany({registerDate:{$exists: true}})
+
+- comparisons
+- not equal
+db.student.find({name:{$ne:"Spongebob"}})
+- <: lt OR lte
+db.student.find({age:{$lt:20}})
+- >: gt OR gte
+db.student.find({age:{$gte:20}})
+db.student.find({gpa:{$gte:20, $lte:4}})
+- IN: within any of the array values; not IN - $nin
+db.student.find({name:{$in:["Spongebob","Patrick","Sandy"]}})
+
+- logical operators: and, or, null, not
+- $and:[]
+db.student.find({$and:[name:"Spongebob",fullTime:true,age:{$lte:21}]})
+- $or:[]
+db.student.find({$or:[name:"Spongebob",fullTime:true,age:{$lte:21}]})
+- $not, including null
+db.student.find({age:{$not:{$lte:30}}})
+
+- index
+- explain how the result is computed
+db.student.find({name:"Larry"}).explain("executionStats")
+
+- when you create an index, it's much faster
+db.student.createIndex({name:1})
+db.student.find({name:"Larry"}).explain("executionStats")
+
+- get and remove index
+db.student.getIndexes()
+db.student.dropIndex("name_1")
+
+- collections
+show collections
+- max storage size, max rows, and auto-id
+db.createCollection("teachers",{capped:true,size:100000000,max:100},{autoIdexId:true})
+
+
+- aggregate pipelines
+- search with $match
+db.universities.aggregate([
+  { $match : { country : 'Spain', city : 'Salamanca' } }
+]).pretty()
+
+- grouping
+db.universities.aggregate([
+  { $group : { _id : '$name', totaldocs : { $sum : 1 } } }
+]).pretty()
+
+- $project: ONLY retrieve fields we need
+db.universities.aggregate([
+  { $project : { _id : 0, country : 1, city : 1, name : 1 } }
+]).pretty()
