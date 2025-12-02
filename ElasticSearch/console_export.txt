@@ -1,0 +1,779 @@
+#1.Elasticsearch in serverless mode, and in that environment many of the cluster-level APIs (like /_cluster/health, /_cluster/state, /_cluster/settings) are intentionally disabled.
+
+# 2.check indices
+GET /_cat/indices?v
+# OR
+GET /_cat/indices?v&expand_wildcards=all
+
+# 3.you need cURL in local settings: https://github.com/codingexplained/complete-guide-to-elasticsearch/blob/master/Getting%20Started/sending-queries-with-curl.md
+
+# 4.sharding and scalibility
+# sharding > (apache lucene) index level
+# Split for increasing shards https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-split
+# Shrink for decreasing shards https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-shrink
+# deciding factors: numbers and sizes of nodes and indices, number of queries; practically if millions of rows, get 5 shards
+
+# 5. replication
+# purpose: prevent hardware failures
+# replication groups in different nodes
+# other ways to save data: snapshots (data at a given time; no alive data)
+# replicas can increase query throughputs
+# GET /_cat/shards?v AND GET /_cat/indices?v
+
+
+# 6. adding more nodes to the cluster
+# get an enrollment token and then add a node
+# https://github.com/codingexplained/complete-guide-to-elasticsearch/blob/master/Getting%20Started/adding-more-nodes-to-the-cluster.md
+# if you add a third node, then at least two nodes need to run
+
+# kill nodes
+# on windows, just close the terminal with the node name; no control over nodes in serverless
+
+# run cURL quests
+GET national-parks/_search
+{
+  "query": {
+    "semantic": {
+      "field": "text",
+      "query": "Which park is most popular?"
+    }
+  }
+}
+
+# 7. manage documents
+# creating index
+PUT /products
+{
+  "settings": {
+    "number_of_shards": 2,
+    "number_of_replicas": 2
+  }
+}
+DELETE products
+
+PUT /products
+# create data (auto-id)
+POST /products/_doc
+{
+  "name": "Coffee Maker",
+  "price": 64,
+  "in_stock": 10
+}
+
+# create data (manual id)
+PUT /products/_doc/100
+{
+  "name": "Toaster",
+  "price": 49,
+  "in_stock": 4
+}
+
+# retrieve data
+GET /products/_doc/100
+
+# update existing data
+# docs are immutable; 
+# also use this for replacement
+POST /products/_update/100
+{
+  "doc": {
+    "in_stock": 3
+  }
+}
+
+# script: {"source": """CODE"""}
+# condition and reduction of value by 1
+POST /products/_update/100
+{
+  "script": {
+    "source": """
+      if (ctx._source.in_stock > 0) {
+        ctx._source.in_stock--;
+      }
+    """
+  }
+}
+
+# add a parameter and refer to it
+POST /products/_update/100
+{
+  "script": {
+    "source": "ctx._source.in_stock -= params.quantity",
+    "params": {
+      "quantity": 4
+    }
+  }
+}
+
+# upsert
+POST /products/_update/101
+{
+  "script": {
+    "source": "ctx._source.in_stock++"
+  },
+  "upsert": {
+    "name": "Blender",
+    "price": 399,
+    "in_stock": 5
+  }
+}
+
+# delete a doc
+DELETE /products/_doc/100
+
+# routing: the process of resolving document shards
+# the default is even distribution; a formula is used: shard_num = hash(_routing)*num_primary_shards
+
+# document versioning: elastic only keeps the most recent version
+# internal versioning: elastic default versioning
+# external versioning:
+PUT /products/_doc/123?version=521&version_type=external
+{
+  "name": "Coffee Maker",
+  "price":64,
+  "in_stock":10
+}
+
+# optmistic concurrency control
+# the purpose is to prevent old version from overwriting a more recent one
+# here we can use primary_term and seq_no for conditioning
+POST /products/_update/100?if_primary_term=X&if_seq_no=X
+{
+  "doc": {
+    "in_stock": 123
+  }
+}
+
+# update a query
+POST /products/_update_by_query
+{
+  "script": {
+    "source": "ctx._source.in_stock--"
+  },
+  "query": {
+    "match_all": {}
+  }
+}
+
+# ignore conflicts if there is any error
+POST /products/_update_by_query
+{
+  "conflicts": "proceed",
+  "script": {
+    "source": "ctx._source.in_stock--"
+  },
+  "query": {
+    "match_all": {}
+  }
+}
+
+# delete documents based on condition
+POST /products/_delete_by_query
+{
+  "query": {
+    "match_all": { }
+  }
+}
+
+# batch processing: multi documents change
+POST /_bulk
+{ "index" : { "_index" : "test", "_id" : "1" } }
+{ "field1" : "value1" }
+{ "index" : { "_index" : "test", "_id" : "3" } }
+{ "field1" : "value3", "field2": "value2" }
+
+# impoprt data with cURL
+# https://curl.se/download.html
+# queries: https://github.com/codingexplained/complete-guide-to-elasticsearch/blob/master/Managing%20Documents/importing-data-with-curl.md
+
+
+# 8. analysis
+# analyzer API: character filters, token filter, and tokenizer
+POST /_analyze
+{
+  "text": "2 guys walk into   a bar, but the third... DUCKS! :-)",
+  "analyzer": "standard"
+}
+
+# this is equivalent to the one above
+POST /_analyze
+{
+  "text": "2 guys walk into   a bar, but the third... DUCKS! :-)",
+  "char_filter": [],
+  "tokenizer": "standard",
+  "filter": ["lowercase"]
+}
+
+# inverted indices: mapping between token/term and their document -> document frequencies
+
+# 9. mapping
+# it defines as how data is stored and their types, just like table schemas
+# explicit - defined by users; dynamic mapping: auto
+POST /_analyze
+{
+  "text": "2 guys walk into   a bar, but the third... DUCKS! :-)",
+  "analyzer": "keyword"
+}
+
+# type coercion
+# you need to consistently give the same datatype for search
+PUT /coercion_test/_doc/1
+{
+  "price": 7.4
+}
+
+# there is no array, the text fields will be concatenated
+POST /_analyze
+{
+  "text": ["Strings are simply", "merged together."],
+  "analyzer": "standard"
+}
+
+# adding explicit mappings
+PUT /reviews
+{
+  "mappings": {
+    "properties": {
+      "rating": { "type": "float" },
+      "content": { "type": "text" },
+      "product_id": { "type": "integer" },
+      "author": {
+        "properties": {
+          "first_name": { "type": "text" },
+          "last_name": { "type": "text" },
+          "email": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
+
+# retrieving mappings
+GET /reviews/_mapping
+GET /reviews/_mapping/field/content
+
+# adding mappings to new fileds in an index
+PUT /reviews/_mapping
+{
+  "properties": {
+    "created_at": {
+      "type": "date"
+    }
+  }
+}
+# there are three date types: without time, with time ("format":"dd/MM/yyyy"), and milliseconds ("format":"epoch_second")
+
+# mapping parameters
+# https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/mapping-parameters
+# format, coerce, doc_values, norms (normalization factors), 
+# index (often used for time-series data),null_value, copy_to (e.g., first_name + last_name has "full_name" in the field of "copy_to")
+
+# update existing mappings
+# in general, elastic search field mappings cannot be changed! YOu need to create a new index
+
+# reindex API for editing schema
+POST /_reindex
+{
+  "source": {
+    "index": "reviews"
+  },
+  "dest": {
+    "index": "reviews_new"
+  }
+}
+
+# reindex data type of a certain field
+POST /_reindex
+{
+  "source": {
+    "index": "reviews"
+  },
+  "dest": {
+    "index": "reviews_new"
+  },
+  "script": {
+    "source": """
+      if (ctx._source.product_id != null) {
+        ctx._source.product_id = ctx._source.product_id.toString();
+      }
+    """
+  }
+}
+
+# rename a field name
+POST /_reindex
+{
+  "source": {
+    "index": "reviews"
+  },
+  "dest": {
+    "index": "reviews_new"
+  },
+  "script": {
+    "source": """
+      # Rename "content" field to "comment"
+      ctx._source.comment = ctx._source.remove("content");
+    """
+  }
+}
+
+# removing fields with sourcing filtering
+POST /_reindex
+{
+  "source": {
+    "index": "reviews",
+    "_source": ["content", "created_at", "rating"]
+  },
+  "dest": {
+    "index": "reviews_new"
+  }
+}
+
+# other uses of reindex: version conflicts, batching, ...
+
+# add field aliases > "path" can be updated
+PUT /reviews/_mapping
+{
+  "properties": {
+    "comment": {
+      "type": "alias",
+      "path": "content"
+    }
+  }
+}
+
+# create a template
+PUT /_index_template/access-logs
+{
+  "index_patterns": ["access-logs-*"],
+  "template": {
+    "settings": {
+      "number_of_shards": 2,
+      "index.mapping.coerce": false
+    },
+    "mappings": {
+      "properties": {
+        "@timestamp": { "type": "date" },
+        "url.original": { "type": "wildcard" },
+        "url.path": { "type": "wildcard" },
+        "url.scheme": { "type": "keyword" },
+        "url.domain": { "type": "keyword" },
+        "client.geo.continent_name": { "type": "keyword" },
+        "client.geo.country_name": { "type": "keyword" },
+        "client.geo.region_name": { "type": "keyword" },
+        "client.geo.city_name": { "type": "keyword" },
+        "user_agent.original": { "type": "keyword" },
+        "user_agent.name": { "type": "keyword" },
+        "user_agent.version": { "type": "keyword" },
+        "user_agent.device.name": { "type": "keyword" },
+        "user_agent.os.name": { "type": "keyword" },
+        "user_agent.os.version": { "type": "keyword" }
+      }
+    }
+  }
+}
+# after putting new data, it will check whether the index name exists; if not, check any templates
+# add "priority" if there are multiple overlapped indices
+
+# dynamic mapping
+
+PUT /people
+{
+  "mappings": {
+    "dynamic": false,
+    "properties": {
+      "first_name": {
+        "type": "text"
+      }
+    }
+  }
+}
+
+#dynamic templates: map any long type to integer
+PUT /dynamic_template_test
+{
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "integers": {
+          "match_mapping_type": "long",
+          "mapping": {
+            "type": "integer"
+          }
+        }
+      }
+    ]
+  }
+}
+# test
+POST /dynamic_template_test/_doc
+{
+  "age": 42,
+  "score": 1000
+}
+GET /dynamic_template_test/_mapping
+
+# regex field matching 
+PUT /test_index
+{
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "names": {
+          "match_mapping_type": "string",
+          "match": "^[a-zA-Z]+_name$", #"path_match"
+          "match_pattern": "regex",
+          "mapping": {
+            "type": "text"
+          }
+        }
+      }
+    ]
+  }
+}
+
+POST /test_index/_doc
+{
+  "first_name": "John",
+  "middle_name": "Edward",
+  "last_name": "Doe"
+}
+
+# mapping recommendations
+# dynamic mapping is not used much in prod
+# set up dynamic to "strict"
+# dont map strings as both text and keywords
+# dont use coercion to avoid mistakes
+# float is good enough for precisions than long, double
+# mapping parameters - if no sorting, agg, or scripting, doc_value: false
+# if no relevance: norm: false
+# if no need to filter values, index: false
+
+
+# build-in analyzer
+# https://www.elastic.co/docs/reference/text-analysis/analyzer-reference
+# 1. standard: case, punctuation
+POST /_analyze
+{
+  "text": "2 guys walk into   a bar, but the third... DUCKS! :-)",
+  "analyzer": "standard"
+}
+
+# 2. pattern
+POST /_analyze
+{
+  "text": "2 guys walk into   a bar, but the third... DUCKS! :-)",
+  "analyzer": "pattern"
+}
+
+# 3. create a customized analyzer
+PUT /analyzer_test
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_custom_analyzer": {
+          "type": "custom",
+          "char_filter": ["html_strip"],
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "stop",
+            "asciifolding"
+          ]
+        }
+      }
+    }
+  }
+}
+POST /analyzer_test/_analyze
+{
+  "analyzer": "my_custom_analyzer", 
+  "text": "I&apos;m in a <em>good</em> mood&nbsp;-&nbsp;and I <strong>love</strong> açaí!"
+}
+
+# POST /analyzer_test/_close
+GET /analyzer_test/_settings
+
+
+# 10. search basics - query DSL
+# (1) simple - search everything
+GET /products/_search
+{
+  "query":{
+    "match_all":{}
+  }
+}
+
+# (2) term-level search
+# this ONLY applies exact matches
+GET /products/_search
+{
+  "query": {
+    "term": {
+      "tags.keyword": {
+        "value": "Vegetable",
+        "case_insensitive": true
+      }
+    }
+  }
+}
+
+# (3) this is a CONTAIN relationship
+GET /products/_search
+{
+  "query": {
+    "terms": {
+      "tags.keyword": ["Soup", "Meat"]
+    }
+  }
+}
+
+# (4) range search
+GET /products/_search
+{
+  "query": {
+    "range": {
+      "in_stock": {
+        "gte": 1,
+        "lte": 5
+      }
+    }
+  }
+}
+
+# (5) wildcards and regex
+GET /products/_search
+{
+  "query": {
+    "regexp": {
+      "tags.keyword": {
+        "value": "Bee(f|r)+"
+      }
+    }
+  }
+}
+
+# (6) whether a col exists
+GET /products/_search
+{
+  "query": {
+    "exists": {
+      "field": "tags.keyword"
+    }
+  }
+}
+
+# (7) whether a col doesn't exist: query-bool-must_not-exist
+GET /products/_search
+{
+  "query": {
+    "bool": {
+      "must_not": [
+        {
+          "exists": {
+            "field": "tags.keyword"
+          }
+        }
+      ]
+    }
+  }
+}
+
+# (8) full-text query >>> the filter is called "match"
+GET my_index/_search
+{
+  "query": {
+    "match": {
+      "description": "Quick brown fox"
+    }
+  }
+}
+
+# (9) operator can be OR/AND
+GET /products/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "pasta chicken",
+        "operator": "and"
+      }
+    }
+  }
+}
+
+# (10) multi-match search
+GET /_search
+{
+  "query": {
+    "multi_match" : {
+      "query":    "this is a test",
+      "fields": [ "subject", "message" ]
+    }
+  }
+}
+
+# (11) phrase search
+GET /products/_search
+{
+  "query": {
+    "match_phrase": {
+      "name": "mango juice"
+    }
+  }
+}
+
+# leaf query - one-more search/one query per time | compound query - multi leave queries / multi criteria
+
+# (12) query with a boolean
+# should is the same as must if only one should; otherwise they are optional when follwoing must
+GET /products/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "tags.keyword": "Alcohol"
+          }
+        }
+      ]
+    }
+  }
+}
+
+# filter is the same as must but ignores any relevance score
+GET /products/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "term": {
+            "tags.keyword": "Alcohol"
+          }
+        }
+      ]
+    }
+  }
+}
+
+# (13) contexts of queries: 1.does the document match? 2.how well does this doc match (score of some kind) > maybe you can use filter param
+
+# (14) boosting queries
+# 1.should, 2.negative,3.negative_boost pm addomg weights
+GET /recipes/_search
+{
+  "query": {
+    "boosting": {
+      "positive": {
+        "bool": {
+          "must": [
+            { "match_all": {} }
+          ],
+          "should": [
+            {
+              "term": {
+                "ingredients.name.keyword": "Pasta"
+              }
+            }
+          ]
+        }
+      },
+      "negative": {
+        "term": {
+          "ingredients.name.keyword": "Bacon"
+        }
+      },
+      "negative_boost": 0.5
+    }
+  }
+}
+
+# (15) disjunction max: this uses weights on matching cirtera on multi-fields
+GET /products/_search
+{
+  "query": {
+    "dis_max": {
+      "queries": [
+        { "match": { "name": "vegetable" } },
+        { "match": { "tags": "vegetable" } }
+      ],
+      "tie_breaker": 0.3
+    }
+  }
+}
+
+# (16) matching nested queries: you need to specify the nested obj and then do the multi-standard search; otherwise the result is wrong because it only fits one or more of the standards, not both
+
+"ingredients": {
+  "type": "nested",
+  "properties": {
+    "name": { "type": "text" },
+    "amount": { "type": "integer" },
+    "unit": { "type": "keyword" }
+  }
+}
+# put nested under query
+GET /recipes/_search
+{
+  "query": {
+    "nested": {
+      "path": "ingredients",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "match": {
+                "ingredients.name": "parmesan"
+              }
+            },
+            {
+              "range": {
+                "ingredients.amount": {
+                  "gte": 100
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+
+# also, add "inner hits" can return the standards that match, not just parent/nest 
+GET /recipes/_search
+{
+  "query": {
+    "nested": {
+      "path": "ingredients",
+      "inner_hits": {},
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "match": {
+                "ingredients.name": "parmesan"
+              }
+            },
+            {
+              "range": {
+                "ingredients.amount": {
+                  "gte": 100
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+
+# (17) limits of nested search
+# 1.max 50 nested fields per index, 2.10k nested obj limit
+
+
+
+

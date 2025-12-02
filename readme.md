@@ -4,3 +4,4 @@ This repo contains other DS/ML-related skills
  - SQL
  - R
  - Tableau
+ - Elasticsearch
