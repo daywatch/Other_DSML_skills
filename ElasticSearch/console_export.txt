@@ -775,5 +775,162 @@ GET /recipes/_search
 # 1.max 50 nested fields per index, 2.10k nested obj limit
 
 
+# 11. join and filter
+# elasticsearch doesnt support SQL joins
+# return parent when child matches
+{
+  "query": {
+    "has_child": {
+      "type": "comment",
+      "query": { "match": { "text": "great" } }
+    }
+  }
+}
+
+# includes and excludes
+GET /recipes/_search
+{
+  "_source": {
+    "includes": "ingredients.*",
+    "excludes": "ingredients.name"
+  },
+  "query": {
+    "match": { "title": "pasta" }
+  }
+}
+
+# specify result size
+GET /recipes/_search
+{
+  "_source": false,
+  "size": 2,
+  "query": {
+    "match": {
+      "title": "pasta"
+    }
+  }
+}
+
+# fuzz matches
+GET /products/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "l0bster",
+        "fuzziness": "auto"
+      }
+    }
+  }
+}
+
+# slop: distance between A and B in "AB" search
+GET /proximity/_search
+{
+  "query": {
+    "match_phrase": {
+      "title": {
+        "query": "spicy sauce",
+        "slop": 2
+      }
+    }
+  }
+}
+
+# adding synonyms dict
+PUT /synonyms
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "synonym_test": {
+          "type": "synonym", 
+          "synonyms": [
+            "awful => terrible",
+            "awesome => great, super",
+            "elasticsearch, logstash, kibana => elk",
+            "weird, strange"
+          ]
+        }
+      },
+      "analyzer": {
+        "my_analyzer": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "synonym_test"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "description": {
+        "type": "text",
+        "analyzer": "my_analyzer"
+      }
+    }
+  }
+}
+
+# testing synonyms in index
+GET /synonyms/_search
+{
+  "query": {
+    "match": {
+      "description": "great"
+    }
+  }
+}
+
+# 12. aggregations
+
+# (1) sum, avg, max, min
+GET /orders/_search
+{
+  "size": 0,
+  "aggs": {
+    "total_sales": {
+      "sum": {
+        "field": "total_amount"
+      }
+    },
+    "avg_sale": {
+      "avg": {
+        "field": "total_amount"
+      }
+    },
+    "min_sale": {
+      "min": {
+        "field": "total_amount"
+      }
+    },
+    "max_sale": {
+      "max": {
+        "field": "total_amount"
+      }
+    }
+  }
+}
+
+# Group all orders by their status field, count how many orders are in each status, include missing values as N/A, allow empty buckets, and sort the statuses alphabetically. Don’t return the actual order documents, just the aggregation results.
+GET /orders/_search
+{
+  "size": 0,
+  "aggs": {
+    "status_terms": {
+      "terms": {
+        "field": "status",
+        "size": 20,
+        "missing": "N/A",
+        "min_doc_count": 0,
+        "order": {
+          "_key": "asc"
+        }
+      }
+    }
+  }
+}
 
 
