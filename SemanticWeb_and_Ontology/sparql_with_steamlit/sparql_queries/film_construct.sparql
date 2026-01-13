@@ -1,0 +1,28 @@
+CONSTRUCT {
+    ?film a dbo:Film ;
+          dbo:title ?title ;
+          dbo:director ?director ;
+          dbo:runtime ?runtime ;
+          dbo:country ?country .
+    ?director rdfs:label ?directorLabel .
+    ?country rdfs:label ?countryLabel .
+}
+WHERE {
+    ?film a dbo:Film .
+    ?film rdfs:label ?title .
+    FILTER(regex(str(?title), "{sparql_param}", "i"))
+    FILTER(lang(?title) = "en")
+    OPTIONAL {
+        ?film dbo:runtime ?runtime .
+    }
+    OPTIONAL {
+        ?film dbo:director ?director .
+        ?director rdfs:label ?directorLabel .
+        FILTER(lang(?directorLabel) = "en")
+    }
+    OPTIONAL {
+        ?film dbo:country ?country .
+        ?country rdfs:label ?countryLabel .
+        FILTER(lang(?countryLabel) = "en")
+    }
+}

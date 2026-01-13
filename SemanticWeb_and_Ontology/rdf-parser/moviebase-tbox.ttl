@@ -1,0 +1,37 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix ext: <http://example.org/tbox#> .
+@prefix schema: <http://schema.org/> .
+
+dbo:Film rdfs:subClassOf ext:Media ,
+                         ext:CreativeWork ;
+.
+ext:CreativeWork rdfs:subClassOf ext:Work ;
+.
+dbo:director rdfs:domain dbo:Film ;
+             rdfs:range ext:Director ;
+.
+dbo:starring rdfs:domain dbo:Film ;
+             rdfs:range ext:Actor ;
+.
+dbo:releaseDate rdfs:domain dbo:Film ;
+				rdfs:range xsd:date ;
+.
+dbo:runtime rdfs:domain dbo:Film ;
+			rdfs:range xsd:integer ;
+.
+dbo:genre rdfs:domain dbo:Film ;
+		  rdfs:range schema:Genre ;
+.
+ext:Director rdfs:subClassOf dbo:Person ;
+             rdfs:label "Director"@en ,
+                        "Regisseur"@de ;
+             rdfs:comment "Someone who directs a film"@en ,
+                          "Jemand der Regie bei einem Film führt"@de ;
+             rdfs:seeAlso dbo:Film ;
+             rdfs:isDefinedBy dbo:director ;
+.
+ext:Actor rdfs:subClassOf dbo:Person ;
+.

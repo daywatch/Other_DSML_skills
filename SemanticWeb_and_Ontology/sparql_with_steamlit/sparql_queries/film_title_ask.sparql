@@ -1,0 +1,7 @@
+ASK
+WHERE {
+    ?film a dbo:Film .
+    ?film rdfs:label ?title .
+    FILTER(regex(str(?title), "{sparql_param}", "i"))
+    FILTER(lang(?title) = "en")
+}

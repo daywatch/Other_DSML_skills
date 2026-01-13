@@ -1,0 +1,492 @@
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix exa: <http://example.org/abox#> .
+@prefix ext: <http://example.org/tbox#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+exa:12_Years_a_Slave a dbo:Film ;
+    rdfs:label "12 Years a Slave"@en ;
+    dbo:director exa:Steve_McQueen ;
+    dbo:genre schema:Biography,
+        schema:Drama,
+        schema:History ;
+    dbo:releaseDate "2013-10-18"^^xsd:date ;
+    dbo:runtime 134 ;
+    dbo:starring exa:Chiwetel_Ejiofor,
+        exa:Michael_Fassbender .
+
+exa:Arrival a dbo:Film ;
+    rdfs:label "Arrival"@en ;
+    dbo:director exa:Denis_Villeneuve ;
+    dbo:genre schema:Drama,
+        schema:Mystery,
+        schema:Sci-Fi ;
+    dbo:releaseDate "2016-11-11"^^xsd:date ;
+    dbo:runtime 116 ;
+    dbo:starring exa:Amy_Adams,
+        exa:Jeremy_Renner .
+
+exa:Birdman a dbo:Film ;
+    rdfs:label "Birdman"@en ;
+    dbo:director exa:Alejandro_G._Inarritu ;
+    dbo:genre schema:Comedy,
+        schema:Drama ;
+    dbo:releaseDate "2014-10-17"^^xsd:date ;
+    dbo:runtime 119 ;
+    dbo:starring exa:Edward_Norton,
+        exa:Michael_Keaton .
+
+exa:Blade_Runner_2049 a dbo:Film ;
+    rdfs:label "Blade Runner 2049"@en ;
+    dbo:director exa:Denis_Villeneuve ;
+    dbo:genre schema:Action,
+        schema:Drama,
+        schema:Mystery ;
+    dbo:releaseDate "2017-10-06"^^xsd:date ;
+    dbo:runtime 164 ;
+    dbo:starring exa:Harrison_Ford,
+        exa:Ryan_Gosling .
+
+exa:Boyhood a dbo:Film ;
+    rdfs:label "Boyhood"@en ;
+    dbo:director exa:Richard_Linklater ;
+    dbo:genre schema:Drama ;
+    dbo:releaseDate "2014-07-11"^^xsd:date ;
+    dbo:runtime 165 ;
+    dbo:starring exa:Ellar_Coltrane,
+        exa:Patricia_Arquette .
+
+exa:Dallas_Buyers_Club a dbo:Film ;
+    rdfs:label "Dallas Buyers Club"@en ;
+    dbo:director exa:Jean-Marc_Vallee ;
+    dbo:genre schema:Biography,
+        schema:Drama ;
+    dbo:releaseDate "2013-11-01"^^xsd:date ;
+    dbo:runtime 117 ;
+    dbo:starring exa:Jennifer_Garner,
+        exa:Matthew_McConaughey .
+
+exa:Dunkirk a dbo:Film ;
+    rdfs:label "Dunkirk"@en ;
+    dbo:director exa:Christopher_Nolan ;
+    dbo:genre schema:Action,
+        schema:Drama,
+        schema:History ;
+    dbo:releaseDate "2017-07-21"^^xsd:date ;
+    dbo:runtime 106 ;
+    dbo:starring exa:Barry_Keoghan,
+        exa:Fionn_Whitehead .
+
+exa:Ex_Machina a dbo:Film ;
+    rdfs:label "Ex Machina"@en ;
+    dbo:director exa:Alex_Garland ;
+    dbo:genre schema:Drama,
+        schema:Sci-Fi,
+        schema:Thriller ;
+    dbo:releaseDate "2014-12-16"^^xsd:date ;
+    dbo:runtime 108 ;
+    dbo:starring exa:Alicia_Vikander,
+        exa:Domhnall_Gleeson .
+
+exa:Get_Out a dbo:Film ;
+    rdfs:label "Get Out"@en ;
+    dbo:director exa:Jordan_Peele ;
+    dbo:genre schema:Horror,
+        schema:Mystery,
+        schema:Thriller ;
+    dbo:releaseDate "2017-02-24"^^xsd:date ;
+    dbo:runtime 104 ;
+    dbo:starring exa:Allison_Williams,
+        exa:Daniel_Kaluuya .
+
+exa:Gone_Girl a dbo:Film ;
+    rdfs:label "Gone Girl"@en ;
+    dbo:director exa:David_Fincher ;
+    dbo:genre schema:Drama,
+        schema:Mystery,
+        schema:Thriller ;
+    dbo:releaseDate "2014-10-03"^^xsd:date ;
+    dbo:runtime 149 ;
+    dbo:starring exa:Ben_Affleck,
+        exa:Rosamund_Pike .
+
+exa:Gravity a dbo:Film ;
+    rdfs:label "Gravity"@en ;
+    dbo:director exa:Alfonso_Cuaron ;
+    dbo:genre schema:Drama,
+        schema:Sci-Fi,
+        schema:Thriller ;
+    dbo:releaseDate "2013-10-04"^^xsd:date ;
+    dbo:runtime 91 ;
+    dbo:starring exa:George_Clooney,
+        exa:Sandra_Bullock .
+
+exa:Her a dbo:Film ;
+    rdfs:label "Her"@en ;
+    dbo:director exa:Spike_Jonze ;
+    dbo:genre schema:Drama,
+        schema:Romance,
+        schema:Sci-Fi ;
+    dbo:releaseDate "2013-12-18"^^xsd:date ;
+    dbo:runtime 126 ;
+    dbo:starring exa:Joaquin_Phoenix,
+        exa:Scarlett_Johansson .
+
+exa:Inside_Out a dbo:Film ;
+    rdfs:label "Inside Out"@en ;
+    dbo:director exa:Pete_Docter ;
+    dbo:genre schema:Adventure,
+        schema:Animation,
+        schema:Comedy ;
+    dbo:releaseDate "2015-06-19"^^xsd:date ;
+    dbo:runtime 95 ;
+    dbo:starring exa:Amy_Poehler,
+        exa:Phyllis_Smith .
+
+exa:La_La_Land a dbo:Film ;
+    rdfs:label "La La Land"@en ;
+    dbo:director exa:Damien_Chazelle ;
+    dbo:genre schema:Comedy,
+        schema:Drama,
+        schema:Music ;
+    dbo:releaseDate "2016-12-09"^^xsd:date ;
+    dbo:runtime 128 ;
+    dbo:starring exa:Emma_Stone,
+        exa:Ryan_Gosling .
+
+exa:Lady_Bird a dbo:Film ;
+    rdfs:label "Lady Bird"@en ;
+    dbo:director exa:Greta_Gerwig ;
+    dbo:genre schema:Comedy,
+        schema:Drama ;
+    dbo:releaseDate "2017-11-03"^^xsd:date ;
+    dbo:runtime 94 ;
+    dbo:starring exa:Laurie_Metcalf,
+        exa:Saoirse_Ronan .
+
+exa:Mad_Max_Fury_Road a dbo:Film ;
+    rdfs:label "Mad Max Fury Road"@en ;
+    dbo:director exa:George_Miller ;
+    dbo:genre schema:Action,
+        schema:Adventure,
+        schema:Sci-Fi ;
+    dbo:releaseDate "2015-05-15"^^xsd:date ;
+    dbo:runtime 120 ;
+    dbo:starring exa:Charlize_Theron,
+        exa:Tom_Hardy .
+
+exa:Moonlight a dbo:Film ;
+    rdfs:label "Moonlight"@en ;
+    dbo:director exa:Barry_Jenkins ;
+    dbo:genre schema:Drama ;
+    dbo:releaseDate "2016-10-21"^^xsd:date ;
+    dbo:runtime 111 ;
+    dbo:starring exa:Mahershala_Ali,
+        exa:Naomie_Harris .
+
+exa:Parasite a dbo:Film ;
+    rdfs:label "Parasite"@en ;
+    dbo:director exa:Bong_Joon-ho ;
+    dbo:genre schema:Comedy,
+        schema:Drama,
+        schema:Thriller ;
+    dbo:releaseDate "2019-05-30"^^xsd:date ;
+    dbo:runtime 132 ;
+    dbo:starring exa:Lee_Sun-kyun,
+        exa:Song_Kang-ho .
+
+exa:Room a dbo:Film ;
+    rdfs:label "Room"@en ;
+    dbo:director exa:Lenny_Abrahamson ;
+    dbo:genre schema:Drama,
+        schema:Thriller ;
+    dbo:releaseDate "2015-10-16"^^xsd:date ;
+    dbo:runtime 118 ;
+    dbo:starring exa:Brie_Larson,
+        exa:Jacob_Tremblay .
+
+exa:Spotlight a dbo:Film ;
+    rdfs:label "Spotlight"@en ;
+    dbo:director exa:Tom_McCarthy ;
+    dbo:genre schema:Biography,
+        schema:Crime,
+        schema:Drama ;
+    dbo:releaseDate "2015-11-06"^^xsd:date ;
+    dbo:runtime 129 ;
+    dbo:starring exa:Mark_Ruffalo,
+        exa:Michael_Keaton .
+
+exa:The_Big_Short a dbo:Film ;
+    rdfs:label "The Big Short"@en ;
+    dbo:director exa:Adam_McKay ;
+    dbo:genre schema:Biography,
+        schema:Comedy,
+        schema:Drama ;
+    dbo:releaseDate "2015-12-11"^^xsd:date ;
+    dbo:runtime 130 ;
+    dbo:starring exa:Christian_Bale,
+        exa:Steve_Carell .
+
+exa:The_Florida_Project a dbo:Film ;
+    rdfs:label "The Florida Project"@en ;
+    dbo:director exa:Sean_Baker ;
+    dbo:genre schema:Drama ;
+    dbo:releaseDate "2017-10-06"^^xsd:date ;
+    dbo:runtime 111 ;
+    dbo:starring exa:Brooklynn_Prince,
+        exa:Willem_Dafoe .
+
+exa:The_Grand_Budapest_Hotel a dbo:Film ;
+    rdfs:label "The Grand Budapest Hotel"@en ;
+    dbo:director exa:Wes_Anderson ;
+    dbo:genre schema:Adventure,
+        schema:Comedy,
+        schema:Crime ;
+    dbo:releaseDate "2014-03-07"^^xsd:date ;
+    dbo:runtime 99 ;
+    dbo:starring exa:Ralph_Fiennes,
+        exa:Tony_Revolori .
+
+exa:The_Imitation_Game a dbo:Film ;
+    rdfs:label "The Imitation Game"@en ;
+    dbo:director exa:Morten_Tyldum ;
+    dbo:genre schema:Biography,
+        schema:Drama,
+        schema:Thriller ;
+    dbo:releaseDate "2014-11-28"^^xsd:date ;
+    dbo:runtime 114 ;
+    dbo:starring exa:Benedict_Cumberbatch,
+        exa:Keira_Knightley .
+
+exa:The_Lobster a dbo:Film ;
+    rdfs:label "The Lobster"@en ;
+    dbo:director exa:Yorgos_Lanthimos ;
+    dbo:genre schema:Comedy,
+        schema:Drama,
+        schema:Romance ;
+    dbo:releaseDate "2015-10-16"^^xsd:date ;
+    dbo:runtime 119 ;
+    dbo:starring exa:Colin_Farrell,
+        exa:Rachel_Weisz .
+
+exa:The_Revenant a dbo:Film ;
+    rdfs:label "The Revenant"@en ;
+    dbo:director exa:Alejandro_G._Inarritu ;
+    dbo:genre schema:Action,
+        schema:Adventure,
+        schema:Drama ;
+    dbo:releaseDate "2015-12-25"^^xsd:date ;
+    dbo:runtime 156 ;
+    dbo:starring exa:Leonardo_DiCaprio,
+        exa:Tom_Hardy .
+
+exa:The_Shape_of_Water a dbo:Film ;
+    rdfs:label "The Shape of Water"@en ;
+    dbo:director exa:Guillermo_del_Toro ;
+    dbo:genre schema:Adventure,
+        schema:Drama,
+        schema:Fantasy ;
+    dbo:releaseDate "2017-12-01"^^xsd:date ;
+    dbo:runtime 123 ;
+    dbo:starring exa:Michael_Shannon,
+        exa:Sally_Hawkins .
+
+exa:The_Wolf_of_Wall_Street a dbo:Film ;
+    rdfs:label "The Wolf of Wall Street"@en ;
+    dbo:director exa:Martin_Scorsese ;
+    dbo:genre schema:Biography,
+        schema:Comedy,
+        schema:Crime ;
+    dbo:releaseDate "2013-12-25"^^xsd:date ;
+    dbo:runtime 180 ;
+    dbo:starring exa:Jonah_Hill,
+        exa:Leonardo_DiCaprio .
+
+exa:Three_Billboards_Outside_Ebbing_Missouri a dbo:Film ;
+    rdfs:label "Three Billboards Outside Ebbing Missouri"@en ;
+    dbo:director exa:Martin_McDonagh ;
+    dbo:genre schema:Comedy,
+        schema:Crime,
+        schema:Drama ;
+    dbo:releaseDate "2017-11-10"^^xsd:date ;
+    dbo:runtime 115 ;
+    dbo:starring exa:Frances_McDormand,
+        exa:Woody_Harrelson .
+
+exa:Whiplash a dbo:Film ;
+    rdfs:label "Whiplash"@en ;
+    dbo:director exa:Damien_Chazelle ;
+    dbo:genre schema:Drama,
+        schema:Music ;
+    dbo:releaseDate "2014-10-10"^^xsd:date ;
+    dbo:runtime 106 ;
+    dbo:starring exa:J.K._Simmons,
+        exa:Miles_Teller .
+
+exa:Adam_McKay a ext:Director .
+
+exa:Alex_Garland a ext:Director .
+
+exa:Alfonso_Cuaron a ext:Director .
+
+exa:Alicia_Vikander a ext:Actor .
+
+exa:Allison_Williams a ext:Actor .
+
+exa:Amy_Adams a ext:Actor .
+
+exa:Amy_Poehler a ext:Actor .
+
+exa:Barry_Jenkins a ext:Director .
+
+exa:Barry_Keoghan a ext:Actor .
+
+exa:Ben_Affleck a ext:Actor .
+
+exa:Benedict_Cumberbatch a ext:Actor .
+
+exa:Bong_Joon-ho a ext:Director .
+
+exa:Brie_Larson a ext:Actor .
+
+exa:Brooklynn_Prince a ext:Actor .
+
+exa:Charlize_Theron a ext:Actor .
+
+exa:Chiwetel_Ejiofor a ext:Actor .
+
+exa:Christian_Bale a ext:Actor .
+
+exa:Christopher_Nolan a ext:Director .
+
+exa:Colin_Farrell a ext:Actor .
+
+exa:Daniel_Kaluuya a ext:Actor .
+
+exa:David_Fincher a ext:Director .
+
+exa:Domhnall_Gleeson a ext:Actor .
+
+exa:Edward_Norton a ext:Actor .
+
+exa:Ellar_Coltrane a ext:Actor .
+
+exa:Emma_Stone a ext:Actor .
+
+exa:Fionn_Whitehead a ext:Actor .
+
+exa:Frances_McDormand a ext:Actor .
+
+exa:George_Clooney a ext:Actor .
+
+exa:George_Miller a ext:Director .
+
+exa:Greta_Gerwig a ext:Director .
+
+exa:Guillermo_del_Toro a ext:Director .
+
+exa:Harrison_Ford a ext:Actor .
+
+exa:J.K._Simmons a ext:Actor .
+
+exa:Jacob_Tremblay a ext:Actor .
+
+exa:Jean-Marc_Vallee a ext:Director .
+
+exa:Jennifer_Garner a ext:Actor .
+
+exa:Jeremy_Renner a ext:Actor .
+
+exa:Joaquin_Phoenix a ext:Actor .
+
+exa:Jonah_Hill a ext:Actor .
+
+exa:Jordan_Peele a ext:Director .
+
+exa:Keira_Knightley a ext:Actor .
+
+exa:Laurie_Metcalf a ext:Actor .
+
+exa:Lee_Sun-kyun a ext:Actor .
+
+exa:Lenny_Abrahamson a ext:Director .
+
+exa:Mahershala_Ali a ext:Actor .
+
+exa:Mark_Ruffalo a ext:Actor .
+
+exa:Martin_McDonagh a ext:Director .
+
+exa:Martin_Scorsese a ext:Director .
+
+exa:Matthew_McConaughey a ext:Actor .
+
+exa:Michael_Fassbender a ext:Actor .
+
+exa:Michael_Shannon a ext:Actor .
+
+exa:Miles_Teller a ext:Actor .
+
+exa:Morten_Tyldum a ext:Director .
+
+exa:Naomie_Harris a ext:Actor .
+
+exa:Patricia_Arquette a ext:Actor .
+
+exa:Pete_Docter a ext:Director .
+
+exa:Phyllis_Smith a ext:Actor .
+
+exa:Rachel_Weisz a ext:Actor .
+
+exa:Ralph_Fiennes a ext:Actor .
+
+exa:Richard_Linklater a ext:Director .
+
+exa:Rosamund_Pike a ext:Actor .
+
+exa:Sally_Hawkins a ext:Actor .
+
+exa:Sandra_Bullock a ext:Actor .
+
+exa:Saoirse_Ronan a ext:Actor .
+
+exa:Scarlett_Johansson a ext:Actor .
+
+exa:Sean_Baker a ext:Director .
+
+exa:Song_Kang-ho a ext:Actor .
+
+exa:Spike_Jonze a ext:Director .
+
+exa:Steve_Carell a ext:Actor .
+
+exa:Steve_McQueen a ext:Director .
+
+exa:Tom_McCarthy a ext:Director .
+
+exa:Tony_Revolori a ext:Actor .
+
+exa:Wes_Anderson a ext:Director .
+
+exa:Willem_Dafoe a ext:Actor .
+
+exa:Woody_Harrelson a ext:Actor .
+
+exa:Yorgos_Lanthimos a ext:Director .
+
+exa:Alejandro_G._Inarritu a ext:Director .
+
+exa:Damien_Chazelle a ext:Director .
+
+exa:Denis_Villeneuve a ext:Director .
+
+exa:Leonardo_DiCaprio a ext:Actor .
+
+exa:Michael_Keaton a ext:Actor .
+
+exa:Ryan_Gosling a ext:Actor .
+
+exa:Tom_Hardy a ext:Actor .
+

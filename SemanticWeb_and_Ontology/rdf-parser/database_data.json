@@ -1,0 +1,242 @@
+[
+    {
+      "Title": "The Grand Budapest Hotel",
+      "Director": "Wes Anderson",
+      "Starring": "Ralph Fiennes, Tony Revolori",
+      "ReleaseDate": "2014-03-07",
+      "Genre": "Adventure, Comedy, Crime",
+      "Runtime": 99
+    },
+    {
+      "Title": "Parasite",
+      "Director": "Bong Joon-ho",
+      "Starring": "Song Kang-ho, Lee Sun-kyun",
+      "ReleaseDate": "2019-05-30",
+      "Genre": "Comedy, Drama, Thriller",
+      "Runtime": 132
+    },
+    {
+      "Title": "Whiplash",
+      "Director": "Damien Chazelle",
+      "Starring": "Miles Teller, J.K. Simmons",
+      "ReleaseDate": "2014-10-10",
+      "Genre": "Drama, Music",
+      "Runtime": 106
+    },
+    {
+      "Title": "La La Land",
+      "Director": "Damien Chazelle",
+      "Starring": "Ryan Gosling, Emma Stone",
+      "ReleaseDate": "2016-12-09",
+      "Genre": "Comedy, Drama, Music",
+      "Runtime": 128
+    },
+    {
+      "Title": "The Shape of Water",
+      "Director": "Guillermo del Toro",
+      "Starring": "Sally Hawkins, Michael Shannon",
+      "ReleaseDate": "2017-12-01",
+      "Genre": "Adventure, Drama, Fantasy",
+      "Runtime": 123
+    },
+    {
+      "Title": "Mad Max Fury Road",
+      "Director": "George Miller",
+      "Starring": "Tom Hardy, Charlize Theron",
+      "ReleaseDate": "2015-05-15",
+      "Genre": "Action, Adventure, Sci-Fi",
+      "Runtime": 120
+    },
+    {
+      "Title": "Moonlight",
+      "Director": "Barry Jenkins",
+      "Starring": "Mahershala Ali, Naomie Harris",
+      "ReleaseDate": "2016-10-21",
+      "Genre": "Drama",
+      "Runtime": 111
+    },
+    {
+      "Title": "Get Out",
+      "Director": "Jordan Peele",
+      "Starring": "Daniel Kaluuya, Allison Williams",
+      "ReleaseDate": "2017-02-24",
+      "Genre": "Horror, Mystery, Thriller",
+      "Runtime": 104
+    },
+    {
+      "Title": "The Revenant",
+      "Director": "Alejandro G. Inarritu",
+      "Starring": "Leonardo DiCaprio, Tom Hardy",
+      "ReleaseDate": "2015-12-25",
+      "Genre": "Action, Adventure, Drama",
+      "Runtime": 156
+    },
+    {
+      "Title": "Arrival",
+      "Director": "Denis Villeneuve",
+      "Starring": "Amy Adams, Jeremy Renner",
+      "ReleaseDate": "2016-11-11",
+      "Genre": "Drama, Mystery, Sci-Fi",
+      "Runtime": 116
+    },
+    {
+      "Title": "Blade Runner 2049",
+      "Director": "Denis Villeneuve",
+      "Starring": "Ryan Gosling, Harrison Ford",
+      "ReleaseDate": "2017-10-06",
+      "Genre": "Action, Drama, Mystery",
+      "Runtime": 164
+    },
+    {
+      "Title": "The Florida Project",
+      "Director": "Sean Baker",
+      "Starring": "Brooklynn Prince, Willem Dafoe",
+      "ReleaseDate": "2017-10-06",
+      "Genre": "Drama",
+      "Runtime": 111
+    },
+    {
+      "Title": "Lady Bird",
+      "Director": "Greta Gerwig",
+      "Starring": "Saoirse Ronan, Laurie Metcalf",
+      "ReleaseDate": "2017-11-03",
+      "Genre": "Comedy, Drama",
+      "Runtime": 94
+    },
+    {
+      "Title": "Three Billboards Outside Ebbing Missouri",
+      "Director": "Martin McDonagh",
+      "Starring": "Frances McDormand, Woody Harrelson",
+      "ReleaseDate": "2017-11-10",
+      "Genre": "Comedy, Crime, Drama",
+      "Runtime": 115
+    },
+    {
+      "Title": "Dunkirk",
+      "Director": "Christopher Nolan",
+      "Starring": "Fionn Whitehead, Barry Keoghan",
+      "ReleaseDate": "2017-07-21",
+      "Genre": "Action, Drama, History",
+      "Runtime": 106
+    },
+    {
+      "Title": "The Lobster",
+      "Director": "Yorgos Lanthimos",
+      "Starring": "Colin Farrell, Rachel Weisz",
+      "ReleaseDate": "2015-10-16",
+      "Genre": "Comedy, Drama, Romance",
+      "Runtime": 119
+    },
+    {
+      "Title": "Ex Machina",
+      "Director": "Alex Garland",
+      "Starring": "Alicia Vikander, Domhnall Gleeson",
+      "ReleaseDate": "2014-12-16",
+      "Genre": "Drama, Sci-Fi, Thriller",
+      "Runtime": 108
+    },
+    {
+      "Title": "Room",
+      "Director": "Lenny Abrahamson",
+      "Starring": "Brie Larson, Jacob Tremblay",
+      "ReleaseDate": "2015-10-16",
+      "Genre": "Drama, Thriller",
+      "Runtime": 118
+    },
+    {
+      "Title": "The Big Short",
+      "Director": "Adam McKay",
+      "Starring": "Christian Bale, Steve Carell",
+      "ReleaseDate": "2015-12-11",
+      "Genre": "Biography, Comedy, Drama",
+      "Runtime": 130
+    },
+    {
+      "Title": "Spotlight",
+      "Director": "Tom McCarthy",
+      "Starring": "Mark Ruffalo, Michael Keaton",
+      "ReleaseDate": "2015-11-06",
+      "Genre": "Biography, Crime, Drama",
+      "Runtime": 129
+    },
+    {
+      "Title": "Her",
+      "Director": "Spike Jonze",
+      "Starring": "Joaquin Phoenix, Scarlett Johansson",
+      "ReleaseDate": "2013-12-18",
+      "Genre": "Drama, Romance, Sci-Fi",
+      "Runtime": 126
+    },
+    {
+      "Title": "12 Years a Slave",
+      "Director": "Steve McQueen",
+      "Starring": "Chiwetel Ejiofor, Michael Fassbender",
+      "ReleaseDate": "2013-10-18",
+      "Genre": "Biography, Drama, History",
+      "Runtime": 134
+    },
+    {
+      "Title": "Gravity",
+      "Director": "Alfonso Cuaron",
+      "Starring": "Sandra Bullock, George Clooney",
+      "ReleaseDate": "2013-10-04",
+      "Genre": "Drama, Sci-Fi, Thriller",
+      "Runtime": 91
+    },
+    {
+      "Title": "The Wolf of Wall Street",
+      "Director": "Martin Scorsese",
+      "Starring": "Leonardo DiCaprio, Jonah Hill",
+      "ReleaseDate": "2013-12-25",
+      "Genre": "Biography, Comedy, Crime",
+      "Runtime": 180
+    },
+    {
+      "Title": "Boyhood",
+      "Director": "Richard Linklater",
+      "Starring": "Ellar Coltrane, Patricia Arquette",
+      "ReleaseDate": "2014-07-11",
+      "Genre": "Drama",
+      "Runtime": 165
+    },
+    {
+      "Title": "Birdman",
+      "Director": "Alejandro G. Inarritu",
+      "Starring": "Michael Keaton, Edward Norton",
+      "ReleaseDate": "2014-10-17",
+      "Genre": "Comedy, Drama",
+      "Runtime": 119
+    },
+    {
+      "Title": "Gone Girl",
+      "Director": "David Fincher",
+      "Starring": "Ben Affleck, Rosamund Pike",
+      "ReleaseDate": "2014-10-03",
+      "Genre": "Drama, Mystery, Thriller",
+      "Runtime": 149
+    },
+    {
+      "Title": "The Imitation Game",
+      "Director": "Morten Tyldum",
+      "Starring": "Benedict Cumberbatch, Keira Knightley",
+      "ReleaseDate": "2014-11-28",
+      "Genre": "Biography, Drama, Thriller",
+      "Runtime": 114
+    },
+    {
+      "Title": "Dallas Buyers Club",
+      "Director": "Jean-Marc Vallee",
+      "Starring": "Matthew McConaughey, Jennifer Garner",
+      "ReleaseDate": "2013-11-01",
+      "Genre": "Biography, Drama",
+      "Runtime": 117
+    },
+    {
+      "Title": "Inside Out",
+      "Director": "Pete Docter",
+      "Starring": "Amy Poehler, Phyllis Smith",
+      "ReleaseDate": "2015-06-19",
+      "Genre": "Animation, Adventure, Comedy",
+      "Runtime": 95
+    }
+  ]
