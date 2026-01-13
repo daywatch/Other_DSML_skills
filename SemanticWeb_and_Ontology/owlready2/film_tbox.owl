@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://example.org/tbox"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://example.org/tbox"
+     versionIRI="http://example.org/tbox/0.1">
+    <Prefix name="" IRI="http://example.org/tbox#"/>
+    <Prefix name="ext" IRI="http://example.org/tbox#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="vann" IRI="http://purl.org/vocab/vann/"/>
+    <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:creator"/>
+        <IRI>https://www.linkedin.com/in/al-hakam-hamdan-5844b0151</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:description"/>
+        <Literal xml:lang="en">Ontology for describing films</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:issued"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#date">2024-09-10</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:license"/>
+        <Literal>https://creativecommons.org/licenses/by/1.0</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:modified"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#date">2024-09-10</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:title"/>
+        <Literal xml:lang="en">Film Ontology</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="vann:preferredNamespacePrefix"/>
+        <Literal>ext</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="vann:preferredNamespaceUri"/>
+        <Literal>http://example.org/tbox#</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="owl:versionInfo"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#decimal">0.1</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="#Actor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Actor_Director"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CreativeWork"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Director"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Media"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Movie"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Person"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Star"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Work"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#actsIn"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#directs"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasActor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasCollaboratedWith"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasDirector"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasGenre"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isPrequel"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isSequel"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#releaseDate"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#runtime"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="#ChatGPTExplanation"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:creator"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:description"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:issued"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:license"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:modified"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:title"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="vann:preferredNamespacePrefix"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="vann:preferredNamespaceUri"/>
+    </Declaration>
+    <Declaration>
+        <Datatype abbreviatedIRI="xsd:date"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Genre"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#Actor_Director"/>
+        <ObjectIntersectionOf>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#actsIn"/>
+                <Class abbreviatedIRI="owl:Thing"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#directs"/>
+                <Class abbreviatedIRI="owl:Thing"/>
+            </ObjectSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Star"/>
+        <ObjectMinCardinality cardinality="3">
+            <ObjectProperty IRI="#actsIn"/>
+        </ObjectMinCardinality>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="#Actor"/>
+        <Class IRI="#Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Actor_Director"/>
+        <Class IRI="#Actor"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Actor_Director"/>
+        <Class IRI="#Director"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CreativeWork"/>
+        <Class IRI="#Work"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Director"/>
+        <Class IRI="#Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Movie"/>
+        <Class IRI="#CreativeWork"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Movie"/>
+        <Class IRI="#Media"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Star"/>
+        <Class IRI="#Actor"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Person"/>
+        <Class IRI="#Work"/>
+    </DisjointClasses>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#actsIn"/>
+        <ObjectProperty IRI="#hasActor"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#directs"/>
+        <ObjectProperty IRI="#hasDirector"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#isPrequel"/>
+        <ObjectProperty IRI="#isSequel"/>
+    </InverseObjectProperties>
+    <SymmetricObjectProperty>
+        <ObjectProperty IRI="#hasCollaboratedWith"/>
+    </SymmetricObjectProperty>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="#isPrequel"/>
+    </TransitiveObjectProperty>
+    <IrreflexiveObjectProperty>
+        <ObjectProperty IRI="#directs"/>
+    </IrreflexiveObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasActor"/>
+        <Class IRI="#Movie"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasCollaboratedWith"/>
+        <Class IRI="#Person"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasDirector"/>
+        <Class IRI="#Movie"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasGenre"/>
+        <Class IRI="#Movie"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isPrequel"/>
+        <Class IRI="#Movie"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isSequel"/>
+        <Class IRI="#Movie"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasActor"/>
+        <Class IRI="#Actor"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasCollaboratedWith"/>
+        <Class IRI="#Person"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasDirector"/>
+        <Class IRI="#Director"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasGenre"/>
+        <Class IRI="#Genre"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isPrequel"/>
+        <Class IRI="#Movie"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isSequel"/>
+        <Class IRI="#Movie"/>
+    </ObjectPropertyRange>
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="#actsIn"/>
+            <ObjectProperty IRI="#hasActor"/>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="#hasCollaboratedWith"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="#directs"/>
+            <ObjectProperty IRI="#hasActor"/>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="#hasCollaboratedWith"/>
+    </SubObjectPropertyOf>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#releaseDate"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#runtime"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="#releaseDate"/>
+        <Class IRI="#Movie"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#runtime"/>
+        <Class IRI="#Movie"/>
+    </DataPropertyDomain>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="#ChatGPTExplanation"/>
+        <IRI>#hasDirector</IRI>
+        <Literal xml:lang="en">ignore the equivalence between this property and dbo:director</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#hasDirector</IRI>
+        <Literal xml:lang="en">A property that assigns a director to a film.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#hasDirector</IRI>
+        <Literal xml:lang="en">has Director</Literal>
+    </AnnotationAssertion>
+    <SubAnnotationPropertyOf>
+        <AnnotationProperty IRI="#ChatGPTExplanation"/>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+    </SubAnnotationPropertyOf>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
