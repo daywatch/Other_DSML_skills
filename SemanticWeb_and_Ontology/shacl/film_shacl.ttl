@@ -1,0 +1,72 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ext: <http://example.org/tbox#> .
+@prefix she: <http://example.org/shacl#> .
+
+she:FilmShape
+    a sh:NodeShape ;
+    sh:targetClass ext:Movie ;
+    sh:not [
+        sh:property [
+            sh:path ext:hasDirector ;
+            sh:maxCount 0 ;
+            she:message "A film must not have less than or equal than 0 directors." ;
+            sh:severity sh:Violation ;
+            sh:deactivated false ;
+        ] ;
+    ] ;
+    sh:property [
+        sh:path ext:runtime ;
+        sh:maxExclusive 150 ;
+        sh:message "A film should not be longer than 150 (minutes)" ;
+        sh:severity sh:Warning ;
+        sh:deactivated true ;
+    ] ;
+    sh:property [
+        sh:path ext:hasActor ;
+        sh:qualifiedMinCount 2 ;
+        sh:qualifiedValueShape [
+            sh:property [
+                sh:path ext:actsIn ;
+                sh:minCount 2 ;
+            ] ;
+        ] ;
+        sh:severity sh:Info ;
+        sh:deactivated true ;
+    ] ;
+    sh:or (
+        [
+            sh:and (
+                [
+                    sh:path ext:hasGenre ;
+                    sh:qualifiedMinCount 1 ;
+                    sh:qualifiedValueShape [
+                        sh:targetClass ext:Genre ;
+                        sh:pattern "Drama" ;
+                    ] ;
+                ]
+                [
+                    sh:path ext:runtime ;
+                    sh:miInclusive 120  ;
+                ]
+                )
+        ]    
+        
+        [
+                sh:and (
+                [
+                    sh:path ext:hasGenre ;
+                    sh:qualifiedMinCount 1 ;
+                    sh:qualifiedValueShape [
+                        sh:targetClass ext:Genre ;
+                        sh:pattern "Comedy" ;
+                    ] ;
+                ]
+                [
+                    sh:path ext:runtime ;
+                    sh:maxInclusive 119  ;
+                ]
+                )
+        ]
+    )
+.

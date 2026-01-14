@@ -1,0 +1,38 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ext: <http://example.org/tbox#> .
+@prefix she: <http://example.org/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+she:calculateTotalRuntime
+    a sh:SPARQLFunction ;
+    sh:returnType xsd:integer ;
+    sh:parameter [
+        sh:path sh:this ;
+    ] ;
+    sh:select """
+        SELECT (SUM(?runtime) AS ?result)
+        WHERE {
+            $this ext:actsIn ?movie .
+            ?movie ext:runtime ?runtime .
+        }
+    """ ;
+.
+
+ext:Actor
+    a rdfs:Class , sh:NodeShape ;
+    sh:rule [
+        a sh:TripleRule ;
+        sh:subject sh:this ;
+        sh:predicate ext:totalRuntime ;
+        sh:object [
+            she:calculateTotalRuntime (sh:this) ;
+        ] ;
+        sh:condition [
+            sh:property [
+                sh:path ext:actsIn ;
+                sh:minCount 2 ;
+            ] ;
+        ] ;
+    ] ;
+.
