@@ -1,0 +1,37 @@
+pip install confluent_kafka
+
+
+
+
+from confluent_kafka import Producer
+
+
+config = {
+    'bootstrap.servers': 'pkc-4r087.us-west2.gcp.confluent.cloud:9092',  # Replace with your bootstrap servers
+    'security.protocol': 'SASL_SSL',
+    'sasl.mechanisms': 'PLAIN',
+    'sasl.username': 'SM6ZOVE5PA2KED2L',  # Replace with your API key
+    'sasl.password': 'c8z8Aeh6oOPUtFz69t5zFxB3q0KlVBqaW8JEUu2XvTKoqfE4vx9k4O5hjaA25Joe'  # Replace with your API secret
+}
+
+# Create a Kafka producer
+producer = Producer(**config)
+
+# Callback function to check for delivery results
+def delivery_report(err, msg):
+  if err is not None:
+        print(f'Message delivery failed: {err}')
+  else:
+        print(f'Message delivered to {msg.topic()} [{msg.partition()}]')
+
+# Function to produce messages
+def produce_messages(file_path, topic_name):
+    with open(file_path, 'r') as file:
+        for line in file:
+          producer.produce(topic_name, line.encode('utf-8'), callback=delivery_report) #use utf-8 for bianry strings
+          producer.poll(1) # an async function on sending messages; 1s
+
+if __name__ == '__main__':
+    file_path = 'customer.txt'  # Replace with your file path
+    topic_name = 'customers'
+    produce_messages(file_path, topic_name)

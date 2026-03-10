@@ -1,0 +1,34 @@
+pip install confluent_kafka
+
+
+
+
+from confluent_kafka import Consumer
+
+
+config = {
+    'bootstrap.servers': 'pkc-4r087.us-west2.gcp.confluent.cloud:9092',  # Replace with your bootstrap servers
+    'security.protocol': 'SASL_SSL',
+    'sasl.mechanisms': 'PLAIN',
+    'sasl.username': 'SM6ZOVE5PA2KED2L',  # Replace with your API key
+    'sasl.password': 'c8z8Aeh6oOPUtFz69t5zFxB3q0KlVBqaW8JEUu2XvTKoqfE4vx9k4O5hjaA25Joe'  # Replace with your API secret
+    'group.id': 'my_consumer_group',  # Consumer group ID
+    'auto.offset.reset': 'earliest',  # Start reading at the earliest message
+}
+
+# Create Consumer instance
+consumer = Consumer(**config)
+
+# Subscribe to the topic
+consumer.subscribe(['customers'])
+
+try:
+    while True: #consumer needs to run indefinitely
+        msg = consumer.poll(timeout=1.0)  # Poll for messages
+        if msg is None:
+            continue
+        else:
+            print('Received message: {}'.format(msg.value().decode('utf-8'))) #decode back to strings
+finally:
+    # Clean up on exit
+    consumer.close()
